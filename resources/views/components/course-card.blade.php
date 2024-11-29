@@ -10,11 +10,11 @@
     <div class="px-6 py-4">
         <!-- Título del curso, limitado a 40 caracteres -->
         <h1 class="text-xl font-semibold text-gray-800 mb-2 leading-6" title="{{ $course->title }}">
-            {{ Str::limit($course->title, 40, '...') }}
+            {{ Str::limit($course->title, 30, '...') }}
         </h1>
         
         <!-- Nombre del profesor del curso -->
-        <p class="text-gray-500 text-sm mb-2">
+        <p class="text-gray-500 text-xs mb-2">
             <i class="fas fa-chalkboard-teacher mr-1"></i> 
             Prof: {{ $course->teacher->name }}
         </p>

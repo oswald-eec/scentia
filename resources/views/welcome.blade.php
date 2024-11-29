@@ -156,129 +156,6 @@
         </div>
     </section>
 
-    {{-- <!-- Sección Últimos Cursos -->
-    <section class="mt-24">
-        <h2 class="text-center text-4xl text-gray-800 font-bold">Últimos Cursos</h2>
-        <p class="text-center text-gray-500 text-lg mt-4 mb-10">Transforma tu pasión en una profesión. ¡El conocimiento es tu mejor inversión!</p>
-
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative">
-            <div x-data="{ current: 0, total: {{ count($courses) }} }" class="relative">
-
-                <!-- Carrusel de Tarjetas -->
-                <div class="overflow-hidden relative max-w-7xl mx-auto">
-                    <!-- Botón de desplazamiento izquierdo -->
-                    <button @click="current = current === 0 ? Math.floor(total / 4) - 1 : current - 1"
-                            class="absolute left-0 top-1/2 transform -translate-y-1/2 z-10 bg-white text-gray-700 p-3 rounded-full shadow-lg hover:bg-gray-300 transition-colors">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" viewBox="0 0 24 24" stroke="currentColor">
-                            <path d="M15 19l-7-7 7-7" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"/>
-                        </svg>
-                    </button>
-
-                    <!-- Contenedor de Tarjetas -->
-                    <div class="flex transition-transform duration-500 ease-in-out" :style="'transform: translateX(-' + (current * 100) + '%)'">
-                        @foreach ($courses as $course)
-                            <div class="min-w-[25%] p-4 flex-shrink-0">
-                                <!-- Uso del componente del curso -->
-                                <x-course-card :course="$course" />
-                            </div>
-                        @endforeach
-                    </div>
-
-                    <!-- Botón de desplazamiento derecho -->
-                    <button @click="current = (current + 1) % Math.ceil(total / 4)"
-                            class="absolute right-0 top-1/2 transform -translate-y-1/2 z-10 bg-white text-gray-700 p-3 rounded-full shadow-lg hover:bg-gray-300 transition-colors">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" viewBox="0 0 24 24" stroke="currentColor">
-                            <path d="M9 5l7 7-7 7" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"/>
-                        </svg>
-                    </button>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Sección Cursos Populares -->
-    <section class="mt-24">
-        <h2 class="text-center text-4xl text-gray-800 font-bold">Cursos Populares</h2>
-        <p class="text-center text-gray-500 text-lg mt-4 mb-10">
-            Transforma tu pasión en una profesión. ¡El conocimiento es tu mejor inversión!
-        </p>
-
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative">
-            <div x-data="{ current: 0, total: {{ count($popularCourses) }} }" class="relative">
-
-                <!-- Carrusel de Tarjetas -->
-                <div class="overflow-hidden relative max-w-7xl mx-auto">
-                    <!-- Botón de desplazamiento izquierdo -->
-                    <button @click="current = current === 0 ? Math.ceil(total / 4) - 1 : current - 1"
-                        class="absolute left-0 top-1/2 transform -translate-y-1/2 z-10 bg-white text-gray-700 p-3 rounded-full shadow-lg hover:bg-gray-300 transition-colors">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" viewBox="0 0 24 24" stroke="currentColor">
-                            <path d="M15 19l-7-7 7-7" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" />
-                        </svg>
-                    </button>
-
-                    <!-- Contenedor de Tarjetas -->
-                    <div class="flex transition-transform duration-500 ease-in-out" :style="'transform: translateX(-' + (current * 100) + '%)'"><!--
-                        -->@foreach ($popularCourses as $course)
-                            <div class="min-w-[25%] p-4 flex-shrink-0">
-                                <x-course-card :course="$course" />
-                            </div>
-                        @endforeach
-                    </div>
-
-                    <!-- Botón de desplazamiento derecho -->
-                    <button @click="current = (current + 1) % Math.ceil(total / 4)"
-                        class="absolute right-0 top-1/2 transform -translate-y-1/2 z-10 bg-white text-gray-700 p-3 rounded-full shadow-lg hover:bg-gray-300 transition-colors">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" viewBox="0 0 24 24" stroke="currentColor">
-                            <path d="M9 5l7 7-7 7" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" />
-                        </svg>
-                    </button>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Sección Cursos más Comprados -->
-    <section class="mt-24">
-        <h2 class="text-center text-4xl text-gray-800 font-bold">Cursos más Comprados</h2>
-        <p class="text-center text-gray-500 text-lg mt-4 mb-10">
-            Transforma tu pasión en una profesión. ¡El conocimiento es tu mejor inversión!
-        </p>
-
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative">
-            <div x-data="{ current: 0, total: {{ count($mostPurchasedCourses) }} }" class="relative">
-
-                <!-- Carrusel de Tarjetas -->
-                <div class="overflow-hidden relative max-w-7xl mx-auto">
-                    <!-- Botón de desplazamiento izquierdo -->
-                    <button @click="current = current === 0 ? Math.ceil(total / 4) - 1 : current - 1"
-                        class="absolute left-0 top-1/2 transform -translate-y-1/2 z-10 bg-white text-gray-700 p-3 rounded-full shadow-lg hover:bg-gray-300 transition-colors">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" viewBox="0 0 24 24" stroke="currentColor">
-                            <path d="M15 19l-7-7 7-7" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" />
-                        </svg>
-                    </button>
-
-                    <!-- Contenedor de Tarjetas -->
-                    <div class="flex transition-transform duration-500 ease-in-out" :style="'transform: translateX(-' + (current * 100) + '%)'"><!--
-                        -->@foreach ($mostPurchasedCourses as $course)
-                            <div class="min-w-[25%] p-4 flex-shrink-0">
-                                <x-course-card :course="$course" />
-                            </div>
-                        @endforeach
-                    </div>
-
-                    <!-- Botón de desplazamiento derecho -->
-                    <button @click="current = (current + 1) % Math.ceil(total / 4)"
-                        class="absolute right-0 top-1/2 transform -translate-y-1/2 z-10 bg-white text-gray-700 p-3 rounded-full shadow-lg hover:bg-gray-300 transition-colors">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" viewBox="0 0 24 24" stroke="currentColor">
-                            <path d="M9 5l7 7-7 7" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" />
-                        </svg>
-                    </button>
-                </div>
-            </div>
-        </div>
-    </section> --}}
-
-    <!-- Reutilización del Carrusel -->
     @php
         $sections = [
             ['title' => 'Últimos Cursos', 'courses' => $courses],
@@ -295,42 +172,289 @@
             </p>
 
             <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative">
-                <div x-data="{ current: 0, items: {{ count($section['courses']) }} }" class="relative">
-
-                    <!-- Botón de desplazamiento izquierdo -->
-                    <button @click="current = current === 0 ? Math.ceil(items / 4) - 1 : current - 1"
-                        class="absolute left-0 top-1/2 transform -translate-y-1/2 z-10 bg-white text-gray-700 p-3 rounded-full shadow-lg hover:bg-gray-300 transition-colors">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" viewBox="0 0 24 24" stroke="currentColor">
-                            <path d="M15 19l-7-7 7-7" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" />
-                        </svg>
-                    </button>
-
-                    <!-- Contenedor de Tarjetas -->
-                    <div class="overflow-hidden relative">
-                        <div class="flex transition-transform duration-500 ease-in-out" 
-                             :style="'transform: translateX(-' + (current * 100) + '%)'">
-                            @foreach ($section['courses'] as $course)
-                                <div class="min-w-[100%] sm:min-w-[50%] md:min-w-[33.33%] lg:min-w-[25%] p-4 flex-shrink-0">
-                                    <x-course-card :course="$course" />
-                                </div>
-                            @endforeach
-                        </div>
+                <!-- Swiper Container -->
+                <div class="swiper-container">
+                    <div class="swiper-wrapper">
+                        @foreach ($section['courses'] as $course)
+                            <div class="swiper-slide">
+                                <x-course-card :course="$course" />
+                            </div>
+                        @endforeach
                     </div>
-
-                    <!-- Botón de desplazamiento derecho -->
-                    <button @click="current = (current + 1) % Math.ceil(items / 4)"
-                        class="absolute right-0 top-1/2 transform -translate-y-1/2 z-10 bg-white text-gray-700 p-3 rounded-full shadow-lg hover:bg-gray-300 transition-colors">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" viewBox="0 0 24 24" stroke="currentColor">
-                            <path d="M9 5l7 7-7 7" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" />
-                        </svg>
-                    </button>
                 </div>
+
+                <!-- Botones de navegación personalizados -->
+                <button class="custom-prev rounded-full w-10 h-10 bg-white shadow-lg flex items-center justify-center text-blue-600 transition-all hover:bg-blue-50 absolute z-10">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
+                    </svg>
+                </button>
+
+                <button class="custom-next rounded-full w-10 h-10 bg-white shadow-lg flex items-center justify-center text-blue-600 transition-all hover:bg-blue-50 absolute z-10">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+                    </svg>
+                </button>
             </div>
         </section>
     @endforeach
 
+    <section class="flex flex-wrap lg:flex-nowrap bg-gray-800 text-white mt-24 min-h-[400px]">
+        <!-- Fondo artístico -->
+        <div class="w-full lg:w-1/2 h-96 lg:h-auto" 
+            style="background-image: url({{ asset('img/home/scentia_home.jpg') }}); background-size: cover; background-position: center;">
+        </div>
+    
+        <!-- Información de Resumen -->
+        <div class="w-full lg:w-1/2 flex flex-col justify-center items-center bg-gray-700 py-12 sm:px-8 lg:px-16">
+            <!-- Título y Descripción -->
+            <h2 class="text-3xl font-bold uppercase tracking-wide">Resumen de la web</h2>
+            <p class="mt-4 text-base text-gray-300">La formación online es el presente</p>
+            <div class="w-20 h-1 bg-red-500 my-6"></div>
+    
+            <!-- Contenedor de estadísticas -->
+            <div class="grid grid-cols-2 gap-6 text-center mt-8">
+                <!-- Cursos -->
+                <div class="bg-gray-800 border border-gray-600 rounded-lg p-8 hover:shadow-lg transition duration-300 ease-in-out">
+                    <span class="text-5xl font-bold text-gray-200">35</span>
+                    <p class="mt-4 text-lg text-gray-300">Cursos</p>
+                </div>
+                <!-- Estudiantes -->
+                <div class="bg-gray-800 border border-gray-600 rounded-lg p-8 hover:shadow-lg transition duration-300 ease-in-out">
+                    <span class="text-5xl font-bold text-gray-200">142</span>
+                    <p class="mt-4 text-lg text-gray-300">Estudiantes</p>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    {{-- <section class="bg-gray-100 mt-24">
+        <div class="container mx-auto px-6">
+            <h2 class="text-center text-4xl text-gray-800 font-bold">Resenas Populares</h2>
+            <p class="text-center text-gray-500 text-lg mt-4 mb-10">
+                Mira lo que opinan algunos de nuestros estudiantes
+            </p>
+    
+            <!-- Slider Principal -->
+            <div class="swiper mySwiper">
+                <div class="swiper-wrapper">
+                    <!-- Tarjeta de comentario 1 -->
+                    <div class="swiper-slide bg-white rounded-lg shadow-lg p-6 flex flex-col items-center">
+                        <img class="w-16 h-16 rounded-full mb-4" src="https://via.placeholder.com/150" alt="Foto de perfil">
+                        <h3 class="font-semibold text-lg">Juan Pérez</h3>
+                        <p class="text-sm text-gray-500">Curso: Introducción a la Programación</p>
+                        <p class="mt-4 text-gray-600 text-center">"El curso fue muy completo y los conceptos están bien explicados. Lo recomiendo a cualquiera que quiera iniciarse en programación."</p>
+                    </div>
+                    <!-- Tarjeta de comentario 2 -->
+                    <div class="swiper-slide bg-white rounded-lg shadow-lg p-6 flex flex-col items-center">
+                        <img class="w-16 h-16 rounded-full mb-4" src="https://via.placeholder.com/150" alt="Foto de perfil">
+                        <h3 class="font-semibold text-lg">Ana López</h3>
+                        <p class="text-sm text-gray-500">Curso: Marketing Digital</p>
+                        <p class="mt-4 text-gray-600 text-center">"Aprendí mucho sobre estrategias de marketing y herramientas digitales. ¡Excelente contenido y profesores!"</p>
+                    </div>
+                    <!-- Tarjeta de comentario 3 -->
+                    <div class="swiper-slide bg-white rounded-lg shadow-lg p-6 flex flex-col items-center">
+                        <img class="w-16 h-16 rounded-full mb-4" src="https://via.placeholder.com/150" alt="Foto de perfil">
+                        <h3 class="font-semibold text-lg">Luis Gómez</h3>
+                        <p class="text-sm text-gray-500">Curso: Diseño Web con TailwindCSS</p>
+                        <p class="mt-4 text-gray-600 text-center">"Un curso increíble para aprender a diseñar interfaces modernas y responsivas. Todo explicado paso a paso."</p>
+                    </div>
+                </div>
+                <!-- Botones de navegación -->
+                <div class="swiper-button-next"></div>
+                <div class="swiper-button-prev"></div>
+                <!-- Paginación -->
+                <div class="swiper-pagination"></div>
+            </div>
+        </div>
+    </section> --}}
+    
+    {{-- <section class="bg-gray-100 py-16">
+        <div class="container mx-auto px-6">
+            <h2 class="text-3xl font-bold text-center mb-8">Comentarios de nuestros estudiantes</h2>
+    
+            <!-- Slider Principal -->
+            <div class="swiper mySwiper">
+                <div class="swiper-wrapper">
+                    @foreach ($reviews as $review)
+                        <div class="swiper-slide bg-white rounded-lg shadow-lg p-6 flex flex-col items-center">
+                            <!-- Imagen de perfil -->
+                            <img class="w-16 h-16 rounded-full mb-4" 
+                                 src="{{ $review->user->profile_photo_url ? asset($review->user->profile_photo_url) : asset('default-avatar.png') }}" 
+                                 alt="{{ $review->user->name }}">
+                            <!-- Nombre del usuario -->
+                            <h3 class="font-semibold text-lg">{{ $review->user->name }}</h3>
+                            <!-- Nombre del curso -->
+                            <p class="text-sm text-gray-500">
+                                Curso: {{ $review->course->title }}
+                            </p>
+                            <!-- Comentario -->
+                            <p class="mt-4 text-gray-600 text-center">"{{ $review->comment }}"</p>
+                            
+                        </div>
+                    @endforeach
+                </div>
+                
+                <!-- Botones de navegación personalizados -->
+                <button class="custom-prev rounded-full w-10 h-10 bg-white shadow-lg flex items-center justify-center text-blue-600 transition-all hover:bg-blue-50 absolute z-10">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
+                    </svg>
+                </button>
+
+                <button class="custom-next rounded-full w-10 h-10 bg-white shadow-lg flex items-center justify-center text-blue-600 transition-all hover:bg-blue-50 absolute z-10">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+                    </svg>
+                </button>
+                <!-- Paginación -->
+                <div class="swiper-pagination"></div>
+            </div>
+        </div>
+    </section> --}}
+
+    <section class="bg-gray-100 mt-24">
+        <div class="container mx-auto px-6">
+            <h2 class="text-center text-4xl text-gray-800 font-bold">Reseñas Populares</h2>
+            <p class="text-center text-gray-500 text-lg mt-4 mb-10">
+                Mira lo que opinan algunos de nuestros estudiantes
+            </p>
+    
+            <!-- Slider Principal -->
+            <div class="swiper mySwiper relative">
+                <div class="swiper-wrapper">
+                    @foreach ($reviews as $review)
+                        <div class="swiper-slide bg-white rounded-lg shadow-lg p-6 flex flex-col items-center">
+                            <!-- Imagen de perfil -->
+                            <img class="w-20 h-20 rounded-full mb-4 border-2 border-blue-500" 
+                                 src="{{ $review->user->profile_photo_url ? asset($review->user->profile_photo_url) : asset('default-avatar.png') }}" 
+                                 alt="{{ $review->user->name }}">
+                            <!-- Nombre del usuario -->
+                            <h3 class="font-semibold text-lg text-gray-800">{{ $review->user->name }}</h3>
+                            <!-- Nombre del curso -->
+                            <p class="text-sm text-gray-500 mt-2">
+                                <strong>Curso:</strong> {{ $review->course->title }}
+                            </p>
+                            <!-- Comentario -->
+                            <p class="mt-4 text-gray-600 text-center italic">"{{ $review->comment }}"</p>
+                        </div>
+                    @endforeach
+                </div>
+            </div>
+        </div>
+    </section>
+    
     <!-- Footer -->
     <x-footer />
+    {{-- <footer class="bg-gray-900 text-white py-12 mt-24 ">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 grid grid-cols-1 md:grid-cols-4 gap-8">
+            <div>
+                <h3 class="text-lg font-bold">Nosotros</h3>
+                <a href="{{ route('contact.index') }}" class="block text-gray-400 mt-2">Contáctanos</a>
+            </div>
+            <div>
+                <h3 class="text-lg font-bold">Enlaces Útiles</h3>
+                <a href="#" class="block text-gray-400 mt-2">Términos y Condiciones</a>
+            </div>
+            <div>
+                <h3 class="text-lg font-bold">Explora</h3>
+                <a href="#" class="block text-gray-400 mt-2">Categorías</a>
+            </div>
+            <div>
+                <h3 class="text-lg font-bold">Redes Sociales</h3>
+                <div class="mt-4">
+                    <a href="#" class="mr-3 text-gray-400"><i class="fab fa-facebook-f"></i></a>
+                    <a href="#" class="mr-3 text-gray-400"><i class="fab fa-twitter"></i></a>
+                    <a href="#" class="text-gray-400"><i class="fab fa-linkedin-in"></i></a>
+                </div>
+            </div>
+        </div>
+        <div class="text-center mt-8 text-gray-400 text-sm">&copy; 2024 Scientia. Todos los derechos reservados.</div>
+    </footer> --}}
+
+    <!-- Inicialización de Swiper -->
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const sliders = document.querySelectorAll('.swiper-container');
+
+            sliders.forEach((slider) => {
+                new Swiper(slider, {
+                    slidesPerView: 4, // Mostrar 4 tarjetas por fila
+                    spaceBetween: 16, // Espaciado entre tarjetas
+                    loop: false, // No repetir contenido
+                    navigation: {
+                        nextEl: slider.closest('section').querySelector('.custom-next'), // Botón personalizado
+                        prevEl: slider.closest('section').querySelector('.custom-prev'), // Botón personalizado
+                    },
+                });
+            });
+        });
+
+        const swiper = new Swiper('.mySwiper', {
+            slidesPerView: 1, // Muestra una diapositiva a la vez
+            spaceBetween: 20, // Espaciado entre las diapositivas
+            navigation: {
+                nextEl: '.swiper-button-next', // Botón "Next"
+                prevEl: '.swiper-button-prev', // Botón "Previous"
+            },
+            loop: true, // Hace que el slider se repita en un bucle
+            autoplay: {
+                delay: 5000, // Cambia cada 5 segundos (opcional)
+            },
+        });
+    </script>
+
+    <!-- Estilos Personalizados -->
+    <style>
+        .swiper-container {
+            overflow: hidden; /* Ocultar contenido que no está visible */
+        }
+
+        .swiper-slide {
+            flex-shrink: 0;
+            width: 25%; /* Mostrar 4 tarjetas */
+            box-sizing: border-box;
+            padding: 0.5rem; /* Espaciado entre tarjetas */
+        }
+
+        /* Ocultar las flechas por defecto de Swiper */
+        .swiper-button-prev,
+        .swiper-button-next {
+            display: none !important;
+        }
+
+        /* Posicionar las flechas personalizadas */
+        .custom-prev,
+        .custom-next {
+            top: 50%;
+            transform: translateY(-50%);
+        }
+
+        .custom-prev {
+            left: 0; /* Alinear a la izquierda del contenedor */
+            margin-left: 1.5rem; /* Separación interna */
+        }
+
+        .custom-next {
+            right: 0; /* Alinear a la derecha del contenedor */
+            margin-right: 1.5rem; /* Separación interna */
+        }
+
+        /* Ajustar tamaños y estilos */
+        .custom-prev, .custom-next {
+            width: 2.5rem; /* Tamaño del círculo */
+            height: 2.5rem;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            background-color: white;
+            color: #1D4ED8; /* Azul Tailwind */
+        }
+
+        .custom-prev:hover,
+        .custom-next:hover {
+            background-color: #EFF6FF; /* Azul claro en hover */
+            color: #2563EB; /* Azul más intenso */
+        }
+    </style>
 
 </x-app-layout>
 

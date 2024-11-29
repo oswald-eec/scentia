@@ -1,7 +1,10 @@
 <?php
 
+use App\Http\Controllers\AboutController;
 use App\Http\Controllers\CourseController;
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\PrivacyPolicyController;
+use App\Http\Controllers\TermsController;
 use App\Http\Livewire\CourseStatus;
 use Illuminate\Support\Facades\Route;
 
@@ -17,6 +20,9 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', HomeController::class)->name('home');
+Route::get('/about-us', [AboutController::class, 'index'])->name('about');
+Route::get('/privacy-policy', [PrivacyPolicyController::class, 'index'])->name('privacy-policy');
+Route::get('/terms', [TermsController::class, 'index'])->name('terms');
 
 Route::middleware([
     'auth:sanctum',

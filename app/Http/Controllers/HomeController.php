@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Course;
+use App\Models\Review;
 use Illuminate\Http\Request;
 
 class HomeController extends Controller
@@ -18,6 +19,12 @@ class HomeController extends Controller
         // Últimos cursos agregados
         $courses = Course::latestAdded()->take(8)->get();
 
-        return view('welcome', compact('popularCourses', 'mostPurchasedCourses', 'courses'));
+        // Obtener los últimos 10 comentarios con datos de usuario y curso
+        $reviews = Review::with(['user', 'course'])
+        ->latest() // Orden por los comentarios más recientes
+        ->take(10) // Limitar a 10 resultados
+        ->get();
+
+        return view('welcome', compact('popularCourses', 'mostPurchasedCourses', 'courses', 'reviews'));
     }
 }
