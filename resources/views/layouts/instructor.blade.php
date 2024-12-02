@@ -50,14 +50,14 @@
                                       @else border-transparent 
                                       @endif pl-2" 
                                href="{{ route('instructor.courses.curriculum', $course) }}">
-                                Curriculum
+                                Lecciones
                             </a>
                         </li>
                         
                         <li>
                             <a class="leading-7 mb-1 border-l-4 @routeIs('instructor.courses.goals', $course) border-indigo-400 hover:text-indigo-600 
                                       @else border-transparent 
-                                      @endif pl-2" href="{{ route('instructor.courses.goals', $course) }}">Metas del Curso</a>
+                                      @endif pl-2" href="{{ route('instructor.courses.goals', $course) }}">Metas</a>
                         </li>
                         <li>
                             <a class="leading-7 mb-1 border-l-4 @routeIs('instructor.courses.students', $course) border-indigo-400 hover:text-indigo-600 

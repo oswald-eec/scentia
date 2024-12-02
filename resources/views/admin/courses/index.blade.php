@@ -3,7 +3,7 @@
 @section('title', 'Dashboard')
 
 @section('content_header')
-    <h1 class="text-primary-emphasis font-weight-bold">Cursos pendientes</h1>
+    <h1 class="text-primary-emphasis font-weight-bold"> Gestión de Cursos pendientes</h1>
 @stop
 
 @section('content')

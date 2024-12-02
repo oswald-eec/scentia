@@ -1,5 +1,92 @@
-<section class="mt-4">
-    <h1 class="font-bold text-3xl mb-4">Valoración</h1>
+{{-- <section class="mt-4">
+    <h1 class="font-bold text-3xl mb-4">Resena de los estudiantes</h1>
+
+    
+    <div class="flex">
+        <div class="text-center">
+            <p class="text-4xl ">4.5</p>
+            <ul class="flex space-x-2 text-yellow-400 text-sm">
+                @for ($i = 1; $i <= 5; $i++)
+                    <li class="cursor-pointer" wire:click="$set('rating', {{ $i }})">
+                        <i class="fas fa-star {{ $rating >= $i ? 'text-yellow-400' : 'text-gray-300' }}"></i>
+                    </li>
+                @endfor
+            </ul>
+            <p>Valoraciones</p>
+
+        </div>
+        <div class="ml-4">
+            <div class="flex items-center mt-4">
+                
+                <div class="w-2/4 h-5 mx-4 bg-gray-200 rounded dark:bg-gray-700">
+                    <div class="h-5 bg-yellow-300 rounded" style="width: 70%"></div>
+                </div>
+                <ul class="flex space-x-2 text-yellow-400 text-sm">
+                    @for ($i = 1; $i <= 5; $i++)
+                        <li class="cursor-pointer" wire:click="$set('rating', {{ $i }})">
+                            <i class="fas fa-star {{ $rating >= $i ? 'text-yellow-400' : 'text-gray-300' }}"></i>
+                        </li>
+                    @endfor
+                </ul>
+                <span class="text-sm font-medium text-gray-500 dark:text-gray-400">70%</span>
+            </div>
+            <div class="flex items-center mt-4">
+                
+                <div class="w-2/4 h-5 mx-4 bg-gray-200 rounded dark:bg-gray-700">
+                    <div class="h-5 bg-yellow-300 rounded" style="width: 17%"></div>
+                </div>
+                <ul class="flex space-x-2 text-yellow-400 text-sm">
+                    @for ($i = 1; $i <= 5; $i++)
+                        <li class="cursor-pointer" wire:click="$set('rating', {{ $i }})">
+                            <i class="fas fa-star {{ $rating >= $i ? 'text-yellow-400' : 'text-gray-300' }}"></i>
+                        </li>
+                    @endfor
+                </ul>
+                <span class="text-sm font-medium text-gray-500 dark:text-gray-400">17%</span>
+            </div>
+            <div class="flex items-center mt-4">
+                
+                <div class="w-2/4 h-5 mx-4 bg-gray-200 rounded dark:bg-gray-700">
+                    <div class="h-5 bg-yellow-300 rounded" style="width: 8%"></div>
+                </div>
+                <ul class="flex space-x-2 text-yellow-400 text-sm">
+                    @for ($i = 1; $i <= 5; $i++)
+                        <li class="cursor-pointer" wire:click="$set('rating', {{ $i }})">
+                            <i class="fas fa-star {{ $rating >= $i ? 'text-yellow-400' : 'text-gray-300' }}"></i>
+                        </li>
+                    @endfor
+                </ul>
+                <span class="text-sm font-medium text-gray-500 dark:text-gray-400">8%</span>
+            </div>
+            <div class="flex items-center mt-4">
+                
+                <div class="w-2/4 h-5 mx-4 bg-gray-200 rounded dark:bg-gray-700">
+                    <div class="h-5 bg-yellow-300 rounded" style="width: 4%"></div>
+                </div>
+                <ul class="flex space-x-2 text-yellow-400 text-sm">
+                    @for ($i = 1; $i <= 5; $i++)
+                        <li class="cursor-pointer" wire:click="$set('rating', {{ $i }})">
+                            <i class="fas fa-star {{ $rating >= $i ? 'text-yellow-400' : 'text-gray-300' }}"></i>
+                        </li>
+                    @endfor
+                </ul>
+                <span class="text-sm font-medium text-gray-500 dark:text-gray-400">4%</span>
+            </div>
+            <div class="flex items-center mt-4">
+                <div class="w-2/4 h-5 mx-4 bg-gray-200 rounded dark:bg-gray-700">
+                    <div class="h-5 bg-yellow-300 rounded" style="width: 1%"></div>
+                </div>
+                <ul class="flex space-x-2 text-yellow-400 text-sm">
+                    @for ($i = 1; $i <= 5; $i++)
+                        <li class="cursor-pointer" wire:click="$set('rating', {{ $i }})">
+                            <i class="fas fa-star {{ $rating >= $i ? 'text-yellow-400' : 'text-gray-300' }}"></i>
+                        </li>
+                    @endfor
+                </ul>
+                <span class="text-sm font-medium text-gray-500 dark:text-gray-400">1%</span>
+            </div>
+        </div>
+    </div>
 
     <div class="bg-white shadow-lg rounded-lg overflow-hidden">
         <div class="px-6 py-4">
@@ -63,4 +150,106 @@
             @endif
         </div>
     </div>
+</section> --}}
+<section class="mt-6">
+    <h1 class="text-2xl font-extrabold text-gray-800 mb-6">Reseñas de los estudiantes</h1>
+
+    {{-- Valoración general --}}
+    <div class="flex flex-col sm:flex-row items-center gap-6 bg-gray-50 p-6 rounded-lg shadow-md">
+        {{-- Promedio general --}}
+        <div class="text-center">
+            <p class="text-5xl font-bold text-yellow-400">{{ number_format($averageRating, 1) }}</p>
+            <div class="flex justify-center mt-2">
+                @for ($i = 1; $i <= 5; $i++)
+                    <i class="fas fa-star {{ $i <= round($averageRating) ? 'text-yellow-400' : 'text-gray-300' }}"></i>
+                @endfor
+            </div>
+            <p class="text-xs text-gray-600 mt-2">{{ $totalReviews }} Valoraciones</p>
+        </div>
+
+        {{-- Porcentaje de valoraciones --}}
+        <div class="w-full space-y-2">
+            @foreach ([5, 4, 3, 2, 1] as $stars)
+                <div class="flex items-center">                    
+                    {{-- Barra de porcentaje --}}
+                    <div class="flex-1 mx-4 bg-gray-200 h-4 rounded-lg overflow-hidden">
+                        <div class="bg-yellow-400 h-full" style="width: {{ $ratingPercentages[$stars] ?? 0 }}%;"></div>
+                    </div>
+
+                    {{-- Estrellas dinámicas --}}
+                    <ul class="flex space-x-1 text-sm">
+                        @for ($i = 1; $i <= 5; $i++)
+                            <li>
+                                <i class="fas fa-star {{ $i <= $stars ? 'text-yellow-400' : 'text-gray-300' }}"></i>
+                            </li>
+                        @endfor
+                    </ul>
+
+                    {{-- Porcentaje al final --}}
+                    <span class="ml-4 text-right text-sm font-medium text-gray-600">
+                        {{ $ratingPercentages[$stars] ?? 0 }}%
+                    </span>
+                </div>
+            @endforeach
+        </div>
+
+    </div>
+
+    {{-- Formulario de reseña (solo si el usuario está inscrito y no ha valorado aún) --}}
+    @can('enrolled', $course)
+        @can('valued', $course)
+            <div class="mt-6 bg-white p-6 rounded-lg shadow-md">
+                <h2 class="text-xl font-bold text-gray-800 mb-4">Deja tu reseña</h2>
+                <textarea wire:model="comment" 
+                          class="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500"
+                          placeholder="Escribe tu reseña sobre este curso..."></textarea>
+                <div class="flex items-center justify-between mt-4">
+                    <div class="flex space-x-2 text-lg">
+                        @for ($i = 1; $i <= 5; $i++)
+                            <i class="fas fa-star cursor-pointer {{ $i <= $rating ? 'text-yellow-400' : 'text-gray-300' }}" 
+                               wire:click="$set('rating', {{ $i }})"></i>
+                        @endfor
+                    </div>
+                    <button wire:click="store" 
+                            class="px-4 py-2 bg-indigo-500 text-white font-semibold rounded-lg hover:bg-indigo-600">
+                        Guardar reseña
+                    </button>
+                </div>
+            </div>
+        @else
+            <div class="mt-6 bg-blue-100 text-blue-600 p-4 rounded-lg shadow-md">
+                <p>Ya has enviado tu reseña para este curso. ¡Gracias por tu aporte!</p>
+            </div>
+        @endcan
+    @endcan
+
+    {{-- Listado de reseñas --}}
+    <div class="mt-8">
+        <h2 class="text-xl font-bold text-gray-800 mb-4">Reseñas</h2>
+        @if ($course->reviews->isNotEmpty())
+            <div class="space-y-4">
+                @foreach ($course->reviews as $review)
+                    <div class="flex items-start space-x-4 bg-white p-4 rounded-lg shadow-md">
+                        <img src="{{ $review->user->profile_photo_url }}" 
+                             alt="Foto de {{ $review->user->name }}" 
+                             class="h-12 w-12 rounded-full object-cover shadow">
+                        <div class="flex-1">
+                            <div class="flex items-center justify-between">
+                                <h3 class="font-semibold text-gray-800">{{ $review->user->name }}</h3>
+                                <div class="flex items-center space-x-1 text-yellow-400">
+                                    @for ($i = 1; $i <= 5; $i++)
+                                        <i class="fas fa-star {{ $i <= $review->rating ? 'text-yellow-400' : 'text-gray-300' }}"></i>
+                                    @endfor
+                                </div>
+                            </div>
+                            <p class="text-sm text-gray-600 mt-2">{{ $review->comment }}</p>
+                        </div>
+                    </div>
+                @endforeach
+            </div>
+        @else
+            <p class="text-gray-500 text-center">Aún no hay valoraciones para este curso.</p>
+        @endif
+    </div>
 </section>
+
