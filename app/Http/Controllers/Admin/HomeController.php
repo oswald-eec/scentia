@@ -37,6 +37,7 @@ class HomeController extends Controller
             'courses_revision' => Course::where('status', Course::REVISION)->count(),
             'courses_published' => Course::where('status', Course::PUBLICADO)->count(),
             'instructors_count' => User::role('instructor')->count(),
+            'students_count' => User::role('estudiante')->count(),
             'admins_count' => User::role('admin')->count(),
         ];
 
@@ -52,8 +53,18 @@ class HomeController extends Controller
             ->take(5)
             ->get();
 
-        // Generar datos para gráficos de ventas
-        // $salesData = $this->getSalesData();
+        // Ventas por mes (último año)
+        $salesData = DB::table('course_user')
+            ->select(
+                DB::raw('YEAR(purchased_at) as year'),
+                DB::raw('MONTH(purchased_at) as month'),
+                DB::raw('COUNT(*) as total_sales'),
+                DB::raw('SUM(price_paid) as total_revenue')
+            )
+            ->groupBy('year', 'month')
+            ->orderBy('year', 'desc')
+            ->orderBy('month', 'desc')
+            ->get();
 
         // Pasar los datos a la vista
         return view('admin.index', compact(
@@ -61,9 +72,10 @@ class HomeController extends Controller
             'mostPurchasedCourses',
             'mostPopularCourses',
             'topCustomers',
-            // 'salesData'
+            'salesData'
         ));
     }
+
 
     /**
      * Obtener datos de ventas por mes y año para gráficos.

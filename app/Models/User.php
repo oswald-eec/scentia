@@ -91,4 +91,12 @@ class User extends Authenticatable
     public function lessons(){
         return $this->belongsToMany(Lesson::class);
     }
+
+    // Relación muchos a muchos con detalles adicionales (pivot table)
+    public function coursesPurchased()
+    {
+        return $this->belongsToMany(Course::class)
+                    ->withPivot('purchased_at', 'price_paid')
+                    ->withTimestamps();
+    }
 }

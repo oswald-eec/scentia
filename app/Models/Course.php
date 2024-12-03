@@ -109,9 +109,13 @@ class Course extends Model
     }
 
     //Relacion muchos a muchos
-    public function students(){
-        return $this->belongsToMany(User::class);
+    public function students()
+    {
+        return $this->belongsToMany(User::class, 'course_user')
+                    ->withPivot('purchased_at', 'price_paid')
+                    ->withTimestamps();
     }
+
 
     //Relacion uno a uno poliformica
     public function image(){
@@ -120,5 +124,13 @@ class Course extends Model
 
     public function lessons(){
         return $this->hasManyThrough(Lesson::class,Section::class);
+    }
+
+    // Relación muchos a muchos con detalles adicionales (pivot table)
+    public function buyers()
+    {
+        return $this->belongsToMany(User::class)
+                    ->withPivot('purchased_at', 'price_paid')
+                    ->withTimestamps();
     }
 }

@@ -66,25 +66,27 @@ class CourseSeeder extends Seeder
         //     }
         // }
 
+        // Crear 100 cursos usando el factory
         $courses = Course::factory(100)->create();
 
-        foreach ($courses as $course) {
-            // Generar reviews con evaluaciones realistas para popularidad
-            $reviews = Review::factory(rand(5, 15))->create([
-                'course_id' => $course->id
-            ]);
+        // Cargar previamente usuarios para evitar consultas repetitivas
+        $users = User::pluck('id');
 
-            // Calcular la calificación promedio del curso
+        foreach ($courses as $course) {
+            // Generar reviews para cada curso
+            $reviews = Review::factory(rand(5, 15))->create(['course_id' => $course->id]);
+
+            // Calcular y actualizar la calificación promedio del curso
             $averageRating = $reviews->avg('rating');
             $course->update(['average_rating' => $averageRating]);
 
             // Asociar una imagen al curso
-            Image::factory(1)->create([
+            Image::factory()->create([
                 'imageable_id' => $course->id,
-                'imageable_type' => Course::class
+                'imageable_type' => Course::class,
             ]);
 
-            // Crear requisitos, objetivos y audiencia
+            // Crear requisitos, objetivos y audiencia del curso
             Requirement::factory(4)->create(['course_id' => $course->id]);
             Goal::factory(4)->create(['course_id' => $course->id]);
             Audience::factory(4)->create(['course_id' => $course->id]);
@@ -94,13 +96,24 @@ class CourseSeeder extends Seeder
             foreach ($sections as $section) {
                 $lessons = Lesson::factory(4)->create(['section_id' => $section->id]);
                 foreach ($lessons as $lesson) {
-                    Description::factory(1)->create(['lesson_id' => $lesson->id]);
+                    Description::factory()->create(['lesson_id' => $lesson->id]);
                 }
             }
 
-            // Simular estudiantes inscritos para cálculo de cursos más comprados
-            $students = User::inRandomOrder()->limit(rand(10, 100))->pluck('id');
+            // Simular estudiantes inscritos para el curso
+            $students = $users->random(rand(10, 100)); // Selección aleatoria de usuarios
             $course->students()->sync($students);
+
+            $studentData = [];
+            foreach ($students as $studentId) {
+                $studentData[$studentId] = [
+                    'purchased_at' => now()->subDays(rand(0, 365)), // Fecha aleatoria en el último año
+                    'price_paid' => $course->price->value ?? 0,
+                ];
+            }
+
+            // Sincronizar los estudiantes sin duplicar entradas existentes
+            $course->students()->syncWithoutDetaching($studentData);
         }
     }
 }

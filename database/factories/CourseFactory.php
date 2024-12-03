@@ -32,10 +32,10 @@ class CourseFactory extends Factory
             'status' => $this->faker->randomElement([Course::BORRADOR, Course::REVISION, Course::PUBLICADO]),
             'slug' => Str::slug($title),
             // 'user_id' => User::all()->random()->id,
-            'user_id' => $this->faker->randomElement([1,2,3,4,5]),
-            'level_id' => Level::all()->random()->id,
-            'category_id' => Category::all()->random()->id,
-            'price_id' => Price::all()->random()->id,
+            'user_id' => User::inRandomOrder()->first()->id, // Selección aleatoria de un usuario
+            'level_id' => Level::inRandomOrder()->first()->id,
+            'category_id' => Category::inRandomOrder()->first()->id,
+            'price_id' => Price::inRandomOrder()->first()->id,
             'average_rating' => null, // Se calculará después
         ];
     }
