@@ -85,7 +85,7 @@
 
     <x-slot name="actions">
         <x-action-message class="mr-3" on="saved">
-            {{ __('Guardar.') }}
+            {{ __('Guardando') }}
         </x-action-message>
 
         <x-button wire:loading.attr="disabled" wire:target="photo">

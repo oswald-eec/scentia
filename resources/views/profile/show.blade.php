@@ -1,7 +1,7 @@
 <x-app-layout>
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-            {{ __('Profile') }}
+            {{ __('Mi perfil') }}
         </h2>
     </x-slot>
 
@@ -10,9 +10,13 @@
             @if (Laravel\Fortify\Features::canUpdateProfileInformation())
                 @livewire('profile.update-profile-information-form')
 
-                <x-section-border />
+                <x-section-border /><x-section-border />
             @endif
 
+            <div>
+                @livewire('profile-information-form')
+            </div>
+            <x-section-border />
             @if (Laravel\Fortify\Features::enabled(Laravel\Fortify\Features::updatePasswords()))
                 <div class="mt-10 sm:mt-0">
                     @livewire('profile.update-password-form')
