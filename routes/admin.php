@@ -26,3 +26,5 @@ Route::get('courses',[CourseController::class,'index'])->name('courses.index');
 Route::get('courses/{course}',[CourseController::class,'show'])->name('courses.show');
 
 Route::post('courses/{course}/approved',[CourseController::class,'approved'])->name('courses.approved');
+
+Route::post('courses/{course}/addHotmartLink', [CourseController::class, 'addHotmartLink'])->name('courses.addHotmartLink');

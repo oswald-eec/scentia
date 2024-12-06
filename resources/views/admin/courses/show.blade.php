@@ -117,18 +117,57 @@
                             src="{{ $course->teacher->profile_photo_url ? $course->teacher->profile_photo_url : asset('img/default/img_default.jpg') }}" 
                             alt="Foto de {{ $course->teacher->name }}" loading="lazy">
                         <div class="ml-4">
-                            <h1 class="font-bold text-lg text-gray-500">Prof. {{ $course->teacher->name }}</h1>
+                            <h1 class="font-bold text-lg text-gray-700">Prof. {{ $course->teacher->name }}</h1>
                             <a class="text-blue-400 text-sm font-bold" href="">{{ '@' . Str::slug($course->teacher->name, '') }}</a>
                         </div>
                     </div>
-                                        
+
+                    <div class="mt-6 px-2 py-2">
+                        <!-- Sección de Hotmart -->
+                        <h2 class="text-xl font-semibold text-gray-700">Hotmart</h2>
+                        <div class="mt-2">
+                            <p class="text-sm text-gray-600">ID: <span class="font-medium">{{ $course->hotmart_id }}</span></p>
+                            <p class="text-sm text-gray-600">URL: 
+                                <a href="{{ $course->hotmart_url }}" target="_blank" class="text-blue-500 hover:underline">
+                                    Ingresa al link del curso
+                                </a>
+                            </p>
+                        </div>
+
+                        <form class="mt-4" action="{{ route('admin.courses.addHotmartLink', $course) }}" method="POST">
+                            @csrf
+                            <label for="hotmart_link" class="block text-gray-700 font-semibold mb-2">Link afiliado:</label>
+                            <input 
+                                type="url"
+                                id="hotmart_link"
+                                name="hotmart_link"
+                                value="{{ old('hotmart_link', $course->hotmart_link) }}"
+                                class="form-input w-full rounded-lg border-gray-300 focus:ring-indigo-500 focus:border-indigo-500 py-2 px-4"
+                                placeholder="Introduce el enlace del curso">
+                            @error('hotmart_link')
+                                <span class="text-sm text-red-500">{{ $message }}</span>
+                            @enderror
+                            <button type="submit" class="w-full mt-4 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-lg transition duration-300 focus:outline-none focus:ring-2 focus:ring-blue-400">
+                                Agregar Link
+                            </button>
+                        </form>
+                        
+                    </div>
+
+                    
+
+                    <!-- Botón Aprobar Curso -->
                     <form action="{{ route('admin.courses.approved', $course) }}" method="POST">
                         @csrf
-                        <button class="block text-center w-full mt-4 bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded transition duration-300">Aprobar curso</button>
+                        <button type="submit" class="w-full mt-4 bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded-lg transition duration-300 focus:outline-none focus:ring-2 focus:ring-green-400">
+                            Aprobar curso
+                        </button>
                     </form>
-                    
                 </div>
             </section>
         </aside>
+
+
+
     </div>
 </x-app-layout>

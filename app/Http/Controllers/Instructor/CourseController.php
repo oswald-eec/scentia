@@ -61,6 +61,9 @@ class CourseController extends Controller
             'level_id' => 'required|exists:levels,id',
             'price_id' => 'required|exists:prices,id',
             'file' => 'nullable|image|max:2048', // Valida que la imagen no sea mayor a 2MB
+            'hotmart_url' => 'nullable|url|max:255',
+            'hotmart_id' => 'nullable|string|max:255|unique:courses,hotmart_id',
+            'hotmart_link' => 'nullable|url|max:255',
         ]);
 
         $course = Course::create($request->all());
@@ -123,11 +126,14 @@ class CourseController extends Controller
             'level_id' => 'required|exists:levels,id',
             'price_id' => 'required|exists:prices,id',
             'file' => 'nullable|image|max:2048', // Valida que la imagen no sea mayor a 2MB
+            'hotmart_url' => 'nullable|url|max:255',
+            'hotmart_id' => 'nullable|string|max:255|unique:courses,hotmart_id',
+            'hotmart_link' => 'nullable|url|max:255',
         ]);
 
         // Actualización del curso
         $course->update($request->only([
-            'title', 'slug', 'subtitle', 'description', 'category_id', 'level_id', 'price_id'
+            'title', 'slug', 'subtitle', 'description', 'category_id', 'level_id', 'price_id', 'hotmart_url', 'hotmart_id'
         ]));
 
         // Actualización de la imagen si se carga una nueva

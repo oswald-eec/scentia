@@ -29,7 +29,7 @@
                 <!-- Botón de compra -->
                 <div class="flex justify-end">
                     <a 
-                        href="#" 
+                        href="{{ $course->hotmart_link }}" 
                         class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-6 rounded-md shadow-sm transition duration-300">
                         Comprar este curso
                     </a>

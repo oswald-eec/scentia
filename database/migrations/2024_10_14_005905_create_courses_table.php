@@ -27,6 +27,10 @@ return new class extends Migration
             ])->default(Course::BORRADOR);
             $table->string('slug')->unique();
 
+            $table->string('hotmart_url')->nullable();
+            $table->string('hotmart_id')->nullable();
+            $table->string('hotmart_link')->nullable();
+
             $table->unsignedBigInteger('user_id');
             $table->unsignedBigInteger('level_id')->nullable();
             $table->unsignedBigInteger('category_id')->nullable();
