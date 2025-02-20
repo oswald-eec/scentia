@@ -41,7 +41,7 @@
                 <!-- Términos y condiciones -->
                 <p class="text-sm text-center">
                     Al comprar este curso, aceptas nuestros 
-                    <a href="#" class="text-red-500 hover:underline">Términos y Condiciones</a>.
+                    <a href="{{ route('terms') }}" class="text-red-500 hover:underline">Términos y Condiciones</a>.
                 </p>
             </div>
         </div>

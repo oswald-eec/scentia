@@ -34,16 +34,39 @@
             </p>
         </div>
 
-        <!-- Precio del curso en dólares -->
-        <p class="text-gray-800 font-bold text-sm mt-3">
-            <i class="fas fa-dollar-sign mr-1"></i> 
-            {{ number_format($course->price->value, 2) }} BS
+        <!-- Precio del curso -->
+        <p class="text-sm font-bold mt-3">
+            @if ($course->price->value == 0)
+                <span class="text-red-600"><i class="fas fa-gift mr-1"></i> GRATIS</span>
+            @else
+                <span class="text-gray-800"><i class="fas fa-dollar-sign mr-1"></i> {{ number_format($course->price->value, 2) }} BS</span>
+            @endif
         </p>
 
         <!-- Botón de "Más Información" -->
-        <a href="{{ route('course.show', $course) }}" 
+        {{-- <a href="{{ route('course.show', $course) }}" 
            class="block text-center w-full mt-4 bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded transition-colors duration-300 ease-in-out focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50">
             Más Información
-        </a>
+        </a> --}}
+
+        <!-- Botón dinámico según si el usuario está inscrito -->
+        @auth
+            @if (auth()->user()->courses_enrolled->contains($course->id))
+                <a href="{{ route('course.show', $course) }}" 
+                    class="block text-center w-full mt-4 bg-green-600 hover:bg-green-700 text-white font-bold py-2 px-4 rounded transition-colors duration-300 ease-in-out focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-opacity-50">
+                    Estas Inscrito
+                </a>
+            @else
+                <a href="{{ route('course.show', $course) }}" 
+                   class="block text-center w-full mt-4 bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded transition-colors duration-300 ease-in-out focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50">
+                    Más Información
+                </a>
+            @endif
+        @else
+            <a href="{{ route('course.show', $course)  }}" 
+               class="block text-center w-full mt-4 bg-green-500 hover:bg-green-600 text-white font-bold py-2 px-4 rounded transition-colors duration-300 ease-in-out focus:outline-none focus:ring-2 focus:ring-green-400 focus:ring-opacity-50">
+               Más Información
+            </a>
+        @endauth
     </div>
 </article>
