@@ -9,6 +9,10 @@ class Course extends Model
 {
     use HasFactory;
 
+    // protected $fillable = [
+    //     'title', 'description', 'price', 'hotmart_id', 'instructor_id'
+    // ];
+
     protected $guarded = ['id','status'];
     protected $withCount = ['students','reviews'];
 
@@ -104,6 +108,11 @@ class Course extends Model
         return $this->belongsTo(Category::class);
     }
 
+    public function subcategory()
+    {
+        return $this->belongsTo(Subcategory::class);
+    }
+
     public function price(){
         return $this->belongsTo(Price::class);
     }
@@ -112,7 +121,7 @@ class Course extends Model
     public function students()
     {
         return $this->belongsToMany(User::class, 'course_user')
-                    ->withPivot('purchased_at', 'price_paid')
+                    // ->withPivot('purchased_at', 'price_paid')
                     ->withTimestamps();
     }
 
@@ -132,5 +141,11 @@ class Course extends Model
         return $this->belongsToMany(User::class)
                     ->withPivot('purchased_at', 'price_paid')
                     ->withTimestamps();
+    }
+
+    // Relación con las compras
+    public function purchases()
+    {
+        return $this->hasMany(Purchase::class);
     }
 }

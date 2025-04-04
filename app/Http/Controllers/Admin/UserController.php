@@ -21,8 +21,19 @@ class UserController extends Controller
      */
     public function index()
     {
-        $users = User::with('courses_enrolled')->paginate(10); // Cargar la relación courses_enrolled
+        $users = User::role('Instructor')->with('courses_taught')->paginate(10);
+        // $users = User::whereHas('roles', function ($query) {
+        //     $query->where('name', 'Estudiante');
+        // })->with('courses_enrolled')->paginate(10);
+
         return view('admin.users.index', compact('users'));
+    }
+
+    public function indexStudents()
+    {
+        $users = User::role('Estudiante')->with('courses_enrolled')->paginate(10);
+
+        return view('admin.users.students', compact('users'));
     }
 
     /**
@@ -52,9 +63,14 @@ class UserController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show(User $user)
+    public function show()
     {
-        return view('admin.users.show', compact('user'));
+        $users = User::whereHas('roles', function ($query) {
+            $query->where('name', 'Estudiante');
+        })->with('courses_enrolled')->paginate(10);
+
+        return view('admin.users.students', compact('users'));
+        // return view('admin.users.show', compact('user'));
     }
 
     /**

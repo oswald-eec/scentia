@@ -10,8 +10,14 @@
             @if (Laravel\Fortify\Features::canUpdateProfileInformation())
                 @livewire('profile.update-profile-information-form')
 
-                <x-section-border /><x-section-border />
+                <x-section-border />
             @endif
+
+             {{-- Preferencias de usuario --}}
+            <div>
+                @livewire('profile.update-preferences-form')
+            </div>
+            <x-section-border />
 
             <div>
                 @livewire('profile-information-form')

@@ -34,7 +34,7 @@
                     <p class="font-semibold text-gray-900">Compañía</p>
                     <ul class="mt-4 space-y-3 text-sm">
                         <li><a href="{{ route('about') }}" class="text-gray-600 hover:text-indigo-600 transition">Sobre Nosotros</a></li>
-                        <li><a href="#" class="text-gray-600 hover:text-indigo-600 transition">Contáctanos</a></li>
+                        <li><a href="{{ route('teach-class') }}" class="text-gray-600 hover:text-indigo-600 transition">Quieres dictar una clase?</a></li>
                     </ul>
                 </div>
                 <!-- Legal -->

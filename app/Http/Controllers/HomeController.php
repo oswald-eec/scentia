@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Course;
+use App\Models\Promotion;
 use App\Models\Review;
 use Illuminate\Http\Request;
 
@@ -25,6 +26,8 @@ class HomeController extends Controller
         ->take(10) // Limitar a 10 resultados
         ->get();
 
-        return view('welcome', compact('popularCourses', 'mostPurchasedCourses', 'courses', 'reviews'));
+        $promotions = Promotion::latest()->get();
+
+        return view('welcome', compact('popularCourses', 'mostPurchasedCourses', 'courses', 'reviews', 'promotions'));
     }
 }

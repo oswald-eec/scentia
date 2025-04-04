@@ -334,11 +334,32 @@ return [
             'active' => ['admin/roles*']
         ],
         [
+            'text' => 'Promociones',
+            'route' => 'admin.promotions.index',
+            'icon' => 'fas fa-fw fa-users-cog',
+            'can' => 'Listar rol',
+            // 'active' => ['admin/roles*']
+        ],
+        [
             'text' => 'Usuarios',
-            'route' => 'admin.users.index',
             'icon' => 'fas fa-fw fa-users',
-            'can' => 'Leer usuarios',
-            'active' => ['admin/users*']
+            'submenu' => [
+                [
+                    'text' => 'Instructores',
+                    'route' => 'admin.users.index',
+                    'icon' => 'fas fa-fw fa-chalkboard-teacher',
+                    'can' => 'Leer usuarios',
+                    // 'active' => ['admin/users*'],
+                ],
+                [
+                    'text' => 'Estudiantes',
+                    'route' => 'admin.users.students',
+                    'icon' => 'fas fa-fw fa-user-graduate',
+                    'can' => 'Leer usuarios',
+                    // 'active' => ['admin/users*'],
+                ],
+            ]
+                
         ],        
         [
             'header' => 'GESTIÓN DE CURSOS',

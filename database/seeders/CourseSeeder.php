@@ -25,46 +25,10 @@ class CourseSeeder extends Seeder
     public function run()
     {
         
-        // Obtener el usuario administrador creado en UserSeeder
+        // Obtener el administrador e instructor
         $admin = User::where('email', 'oss.dev@test.com')->first();
+        $instructor = User::where('email', 'estb.dev@test.com')->first();
 
-        // $courses = Course::factory(100)->create();
-
-        // foreach ($courses as $course) {
-
-        //     Review::factory(5)->create([
-        //         'course_id' => $course->id
-        //     ]);
-
-        //     Image::factory(1)->create([
-        //         'imageable_id' => $course->id,
-        //         'imageable_type' => Course::class
-        //     ]);
-
-        //     Requirement::factory(4)->create([
-        //         'course_id' => $course->id
-        //     ]);
-
-        //     Goal::factory(4)->create([
-        //         'course_id' => $course->id
-        //     ]);
-
-        //     Audience::factory(4)->create([
-        //         'course_id' => $course->id
-        //     ]);
-
-        //     $sections = Section::factory(4)->create([
-        //         'course_id' => $course->id
-        //     ]);
-
-        //     foreach($sections as $section){
-        //         $lessons = Lesson::factory(4)->create(['section_id' => $section->id]);
-
-        //         foreach($lessons as $lesson){
-        //             Description::factory(1)->create(['lesson_id' => $lesson->id]);
-        //         }
-        //     }
-        // }
 
         // Crear 100 cursos usando el factory
         $courses = Course::factory(100)->create();

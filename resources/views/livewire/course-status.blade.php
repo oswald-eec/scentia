@@ -5,13 +5,14 @@
             <div class="relative overflow-hidden rounded-lg aspect-w-16 aspect-h-9">
                 <iframe 
                     class="absolute top-0 left-0 w-full h-full rounded-lg" 
-                    src="{{ $current->iframe }}" 
+                    src="{{ $current->url }}" 
                     allowfullscreen 
                     loading="lazy">
                 </iframe>
             </div>
 
             <h2 class="text-3xl text-gray-600 font-bold mt-4">{{ $current->name }}</h2>
+            <h2 class="text-3xl text-gray-600 font-bold mt-4">El iframe es: {{ $current->url }}</h2>
 
             @if ($current->description)
                 <div class="text-gray-600 mt-2">

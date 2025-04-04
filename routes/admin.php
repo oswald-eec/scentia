@@ -5,6 +5,7 @@ use App\Http\Controllers\Admin\CourseController;
 use App\Http\Controllers\Admin\HomeController;
 use App\Http\Controllers\Admin\LevelController;
 use App\Http\Controllers\Admin\PriceController;
+use App\Http\Controllers\Admin\PromotionController;
 use App\Http\Controllers\Admin\RoleController;
 use App\Http\Controllers\Admin\UserController;
 use Illuminate\Support\Facades\Route;
@@ -14,10 +15,14 @@ Route::get('',[HomeController::class, 'index'])->middleware('can:Ver dashboard')
 Route::resource('roles',RoleController::class)->names('roles');
 
 Route::resource('users',UserController::class)->names('users');
+Route::get('users/students', [UserController::class, 'indexStudents'])->name('users.students');
+
 
 Route::resource('categories', CategoryController::class)->names('categories');
 
 Route::resource('levels', LevelController::class)->names('levels');
+
+Route::resource('promotions', PromotionController::class)->names('promotions');
 
 Route::resource('prices', PriceController::class)->names('prices');
 

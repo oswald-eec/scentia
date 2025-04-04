@@ -1,5 +1,5 @@
 <x-app-layout>
-    <section class="bg-white py-16">
+    <section class="bg-gray-100 py-16">
         <div class="container mx-auto px-6">
             <h1 class="text-4xl font-bold text-center text-gray-800 mb-8">Política de Privacidad</h1>
 
@@ -67,4 +67,7 @@
             </div>
         </div>
     </section>
+
+    <!-- Footer -->
+    <x-footer />
 </x-app-layout>

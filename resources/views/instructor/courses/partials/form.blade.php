@@ -53,16 +53,35 @@
 </div>
 
 <!-- Selección de categoría, nivel y precio -->
-<div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-4">
+<div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-4">
     <div>
+        <!-- Selección de Categoría -->
         {!! Form::label('category_id', 'Categoría', ['class' => 'block font-semibold text-gray-700 mb-1']) !!}
         {!! Form::select('category_id', $categories, null, [
-            'class' => 'form-input rounded-md block w-full mt-1 focus:ring-indigo-500 focus:border-indigo-500' . ($errors->has('category_id') ? 'border-red-600' : ''),
+            'class' => 'form-input rounded-md block w-full mt-1 focus:ring-indigo-500 focus:border-indigo-500',
+            'id' => 'category_id',
+            'placeholder' => 'Selecciona una categoría',
         ]) !!}
         @error('category_id')
             <span class="text-sm text-red-600">{{ $message }}</span>
         @enderror
     </div>
+    
+    <!-- Subcategoría del curso -->
+    <div class="mb-4">
+        {!! Form::label('subcategory_id', 'Subcategoría', ['class' => 'block font-semibold text-gray-700 mb-1']) !!}
+        {!! Form::select('subcategory_id', $subcategories, null, [
+            'class' => 'form-input rounded-md block w-full mt-1 focus:ring-indigo-500 focus:border-indigo-500' . ($errors->has('subcategory_id') ? ' border-red-600' : ''),
+            'placeholder' => 'Selecciona una subcategoría',
+        ]) !!}
+        @error('subcategory_id')
+            <span class="text-sm text-red-600">{{ $message }}</span>
+        @enderror
+    </div>
+    
+</div>
+
+<div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-4">
     <div>
         {!! Form::label('level_id', 'Nivel', ['class' => 'block font-semibold text-gray-700 mb-1']) !!}
         {!! Form::select('level_id', $levels, null, [
@@ -101,8 +120,34 @@
                 'id' => 'file',
                 'accept' => 'image/*',
             ]) !!}
-            <p class="text-sm text-gray-500 mt-1">Sube una imagen clara y relevante para tu curso.</p>
+            <p class="text-sm text-gray-500 mt-1">Sube una imagen clara y relevante para tu curso. Debe cumplir con nuestros estándares de calidad para ser aceptada. Requisitos importantes: 750x500 píxeles; .jpg, .jpeg, .gif o .png. Sin texto.</p>
             @error('file')
+                <span class="text-sm text-red-600">{{ $message }}</span>
+            @enderror
+        </div>
+    </div>
+</div>
+
+<!-- Imagen del curso -->
+<div class="mb-6">
+    <h2 class="font-semibold text-gray-700 mb-2">Video promocional del curso</h2>
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <figure>
+            <img 
+                id="picture" 
+                class="w-full h-64 object-cover object-center rounded-md mt-1 focus:ring-indigo-500 focus:border-indigo-500" 
+                src="{{ asset($course->image->url ?? 'img/default/img_default.jpg') }}" 
+                alt="Imagen del curso"
+            >
+        </figure>
+        <div >
+            {!! Form::label('promo_video', 'Video de promoción', ['class' => 'block font-semibold text-gray-700 mb-1']) !!}
+            {!! Form::file('promo_video', [
+                'class' => 'form-input rounded-md block w-full focus:ring-indigo-500 focus:border-indigo-500' . ($errors->has('promo_video') ? ' border-red-600' : ''),
+                'accept' => 'video/*',
+            ]) !!}
+            <p class="text-sm text-gray-500 mt-1">Sube un video promocional en formato MP4, AVI o MOV (máx. 50MB).</p>
+            @error('promo_video')
                 <span class="text-sm text-red-600">{{ $message }}</span>
             @enderror
         </div>
@@ -148,5 +193,9 @@
             <span class="text-xs text-red-600 mt-1 block">{{ $message }}</span>
         @enderror
     </div>
+
+    
 </div>
+
+
 

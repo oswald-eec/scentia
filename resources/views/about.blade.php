@@ -1,5 +1,5 @@
 <x-app-layout>
-    <section class="bg-blue-50 py-16">
+    <section class="bg-gray-100 py-16">
         <div class="container mx-auto px-6 text-center">
             <h1 class="text-4xl font-bold text-gray-800 mb-8">Sobre Nosotros</h1>
             <p class="text-xl text-gray-600 mb-8 max-w-3xl mx-auto">Nuestra misión es ofrecerte un espacio donde puedas desarrollar nuevas habilidades y conocimientos, mejorando tu vida profesional y personal. Con una amplia variedad de cursos online, nos comprometemos a brindarte los mejores recursos para que aprendas a tu propio ritmo y desde cualquier lugar.</p>
@@ -38,4 +38,7 @@
             </div>
         </div>
     </section>
+
+    <!-- Footer -->
+    <x-footer />
 </x-app-layout>

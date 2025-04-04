@@ -3,63 +3,47 @@
     {{-- Seccion Portada --}}
     <section >
         <div >
-            <div x-data="{            
-                // Configuración de tiempo entre diapositivas en milisegundos
+            @php
+                $slides = $promotions->map(fn($p) => [
+                    'imgSrc' => asset('storage/' . $p->image_url),
+                    'imgAlt' => $p->name,
+                    'title' => $p->name,
+                    'description' => $p->description,
+                ]);
+            @endphp
+            <div x-data='{
                 autoplayIntervalTime: 4000,
-                slides: [                
-                    {
-                        imgSrc: '{{ asset('img/home/scentia_home.jpg') }}',
-                        imgAlt: 'Descuento de 20 USD por compra de 5 cursos.',  
-                        title: '20 USD Dcto por la compra de 5 cursos',
-                        description: 'Aprender lo que más te gusta, nunca tan sencillo y económico',           
-                    },                
-                    {                    
-                        imgSrc: '{{ asset('img/home/scentia_home_1.jpg') }}',
-                        imgAlt: 'Descuento del 50% en cursos de programación',  
-                        title: '50% Dcto en todos los cursos de programación',
-                        description: 'Conviértete en desarrollador con nuestros cursos a mitad de precio',            
-                    },                
-                    {                    
-                        imgSrc: '{{ asset('img/home/scentia_home_2.jpg') }}',
-                        imgAlt: 'Acceso ilimitado por 3 meses',    
-                        title: '3 meses de acceso ilimitado por solo 30 USD',
-                        description: 'Aprovecha nuestra oferta exclusiva por tiempo limitado',       
-                    },            
-                ],            
+                slides: @json($slides),
                 currentSlideIndex: 1,
                 isPaused: false,
                 autoplayInterval: null,
-                // Función para ir a la diapositiva anterior
                 previous() {                
                     if (this.currentSlideIndex > 1) {                    
-                        this.currentSlideIndex = this.currentSlideIndex - 1                
+                        this.currentSlideIndex = this.currentSlideIndex - 1;                
                     } else {                    
-                        this.currentSlideIndex = this.slides.length                
+                        this.currentSlideIndex = this.slides.length;                
                     }            
                 },            
-                // Función para avanzar a la siguiente diapositiva
                 next() {                
                     if (this.currentSlideIndex < this.slides.length) {                    
-                        this.currentSlideIndex = this.currentSlideIndex + 1                
+                        this.currentSlideIndex = this.currentSlideIndex + 1;                
                     } else {                    
-                        this.currentSlideIndex = 1                
+                        this.currentSlideIndex = 1;                
                     }            
                 },    
-                // Función para activar el autoplay
                 autoplay() {
                     this.autoplayInterval = setInterval(() => {
                         if (!this.isPaused) {
-                            this.next()
+                            this.next();
                         }
-                    }, this.autoplayIntervalTime)
+                    }, this.autoplayIntervalTime);
                 },
-                // Actualiza el tiempo de intervalo de autoplay
                 setAutoplayInterval(newIntervalTime) {
-                    clearInterval(this.autoplayInterval)
-                    this.autoplayIntervalTime = newIntervalTime
-                    this.autoplay()
-                },    
-            }" x-init="autoplay" class="relative w-full overflow-hidden">
+                    clearInterval(this.autoplayInterval);
+                    this.autoplayIntervalTime = newIntervalTime;
+                    this.autoplay();
+                }
+            }' x-init="autoplay" class="relative w-full overflow-hidden">
        
                 <!-- Slides -->
                 <div class="relative min-h-[500px] w-full">

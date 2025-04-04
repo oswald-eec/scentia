@@ -10,6 +10,11 @@
             'route' => route('courses.index'),
             'active' => request()->routeIs('courses.*'),
         ],
+        [
+            'name' => 'Quieres dictar una clase?',
+            'route' => route('teach-class'),
+            'active' => request()->routeIs('teach-class'),
+        ],
     ];
 @endphp
 
