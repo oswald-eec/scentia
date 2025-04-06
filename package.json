@@ -19,6 +19,7 @@
     },
     "dependencies": {
         "@ckeditor/ckeditor5-build-classic": "^43.3.0",
-        "@tailwindcss/aspect-ratio": "^0.4.2"
+        "@tailwindcss/aspect-ratio": "^0.4.2",
+        "swiper": "^11.1.15"
     }
 }

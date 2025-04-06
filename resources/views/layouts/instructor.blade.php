@@ -50,14 +50,14 @@
                                       @else border-transparent 
                                       @endif pl-2" 
                                href="{{ route('instructor.courses.curriculum', $course) }}">
-                                Curriculum
+                                Lecciones
                             </a>
                         </li>
                         
                         <li>
                             <a class="leading-7 mb-1 border-l-4 @routeIs('instructor.courses.goals', $course) border-indigo-400 hover:text-indigo-600 
                                       @else border-transparent 
-                                      @endif pl-2" href="{{ route('instructor.courses.goals', $course) }}">Metas del Curso</a>
+                                      @endif pl-2" href="{{ route('instructor.courses.goals', $course) }}">Metas</a>
                         </li>
                         <li>
                             <a class="leading-7 mb-1 border-l-4 @routeIs('instructor.courses.students', $course) border-indigo-400 hover:text-indigo-600 
@@ -69,16 +69,41 @@
                     <!-- Status del curso -->
                     @switch($course->status)
                         @case(1)
-                            <form action="{{ route('instructor.courses.status', $course) }}" method="POST">
+                            {{-- <form action="{{ route('instructor.courses.status', $course) }}" method="POST">
                                 @csrf
                                 <button type="submit" class="px-4 py-2 bg-red-500 text-white rounded-lg hover:bg-red-600">Solicitar revisión</button>
+                            </form> --}}
+
+                            <form action="{{ route('instructor.courses.status', $course) }}" method="POST">
+                                @csrf
+                                <button type="submit" class="px-6 py-3 bg-red-500 text-white rounded-lg shadow-md hover:bg-red-600 focus:outline-none focus:ring-2 focus:ring-red-400 transition duration-300 ease-in-out transform hover:scale-105">
+                                    Solicitar revisión
+                                </button>
                             </form>
+                            
+                            @if ($course->hotmart_url == null || $course->hotmart_id == null)
+                                <div class="mt-4 p-4 rounded bg-red-300 text-red-800 flex items-center space-x-2">
+                                    <svg class="w-5 h-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                                        <path fill-rule="evenodd" d="M8.293 6.293a1 1 0 011.414 0L12 8.586l2.293-2.293a1 1 0 111.414 1.414L13.414 10l2.293 2.293a1 1 0 11-1.414 1.414L12 11.414l-2.293 2.293a1 1 0 11-1.414-1.414L10.586 10 8.293 7.707a1 1 0 010-1.414z" clip-rule="evenodd"/>
+                                    </svg>
+                                    <p class="text-xs font-semibold">Te falta completar los campos de Hotmart del Curso</p>
+                                </div>
+                            @else
+                                <div class="mt-4 p-4 rounded bg-green-300 text-green-800 flex items-center space-x-2">
+                                    <svg class="w-5 h-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                                        <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm4.707-10.707a1 1 0 00-1.414 0L9 12.586 7.707 11.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4a1 1 0 000-1.414z" clip-rule="evenodd"/>
+                                    </svg>
+                                    <p class="text-xs font-semibold">¡Está completo el registro! Envia la solicitud.</p>
+                                </div>
+                            @endif
+                            
+                            
                             @break
 
                         @case(2)
-                            <div class="bg-white shadow-lg rounded-lg overflow-hidden">
+                            <div class="bg-yellow-400 shadow-lg rounded-lg overflow-hidden ">
                                 <div class="px-6 py-4">
-                                    <div class="text-yellow-600 font-semibold">Este curso está en revisión</div>
+                                    <div class="text-white font-semibold">Este curso está en revisión</div>
                                 </div>
                             </div>
                             @break

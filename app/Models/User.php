@@ -71,6 +71,10 @@ class User extends Authenticatable
         return $this->hasOne(Course::class);
     }
 
+    public function courses_taught(){
+        return $this->hasMany(Course::class);
+    }
+
     public function reviews(){
         return $this->hasMany(Review::class);
     }
@@ -90,5 +94,18 @@ class User extends Authenticatable
 
     public function lessons(){
         return $this->belongsToMany(Lesson::class);
+    }
+
+    // Relación muchos a muchos con detalles adicionales (pivot table)
+    public function coursesPurchased()
+    {
+        return $this->belongsToMany(Course::class)
+                    ->withPivot('purchased_at', 'price_paid')
+                    ->withTimestamps();
+    }
+
+    public function preferences()
+    {
+        return $this->belongsToMany(Category::class, 'category_user');
     }
 }

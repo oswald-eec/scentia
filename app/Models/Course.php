@@ -9,6 +9,10 @@ class Course extends Model
 {
     use HasFactory;
 
+    // protected $fillable = [
+    //     'title', 'description', 'price', 'hotmart_id', 'instructor_id'
+    // ];
+
     protected $guarded = ['id','status'];
     protected $withCount = ['students','reviews'];
 
@@ -104,14 +108,23 @@ class Course extends Model
         return $this->belongsTo(Category::class);
     }
 
+    public function subcategory()
+    {
+        return $this->belongsTo(Subcategory::class);
+    }
+
     public function price(){
         return $this->belongsTo(Price::class);
     }
 
     //Relacion muchos a muchos
-    public function students(){
-        return $this->belongsToMany(User::class);
+    public function students()
+    {
+        return $this->belongsToMany(User::class, 'course_user')
+                    // ->withPivot('purchased_at', 'price_paid')
+                    ->withTimestamps();
     }
+
 
     //Relacion uno a uno poliformica
     public function image(){
@@ -120,5 +133,19 @@ class Course extends Model
 
     public function lessons(){
         return $this->hasManyThrough(Lesson::class,Section::class);
+    }
+
+    // Relación muchos a muchos con detalles adicionales (pivot table)
+    public function buyers()
+    {
+        return $this->belongsToMany(User::class)
+                    ->withPivot('purchased_at', 'price_paid')
+                    ->withTimestamps();
+    }
+
+    // Relación con las compras
+    public function purchases()
+    {
+        return $this->hasMany(Purchase::class);
     }
 }

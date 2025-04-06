@@ -15,20 +15,26 @@ class UserSeeder extends Seeder
      */
     public function run()
     {
-        $user = User::create([
-                    'name'=>'Osvaldo Erquicia Cespedes',
-                    'email' => 'oss.dev@test.com',
-                    'password' => bcrypt('test1234')
-                ]);
-        $user->assignRole('Admin');
-
-        $user1 = User::create([
-            'name'=>'Esteban Erquicia Cespedes',
-            'email' => 'estb.dev@test.com',
-            'password' => bcrypt('test1234')
+        // Crear un administrador
+        $admin = User::create([
+            'name' => 'Osvaldo Erquicia Cespedes',
+            'email' => 'oss.dev@test.com',
+            'password' => bcrypt('test1234'),
         ]);
-        $user1->assignRole('Instructor');
+        $admin->assignRole('Admin');
 
-        User::factory(99)->create();
+        // Crear un instructor
+        $instructor = User::create([
+            'name' => 'Esteban Erquicia Cespedes',
+            'email' => 'estb.dev@test.com',
+            'password' => bcrypt('test1234'),
+        ]);
+        $instructor->assignRole('Instructor');
+
+        // Crear 99 usuarios adicionales con roles aleatorios
+        User::factory(99)->create()->each(function ($user) {
+            $roles = ['Estudiante', 'Instructor'];
+            $user->assignRole($roles[array_rand($roles)]);
+        });
     }
 }

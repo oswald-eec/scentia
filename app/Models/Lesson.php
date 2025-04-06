@@ -9,6 +9,14 @@ class Lesson extends Model
 {
     use HasFactory;
 
+    // protected $fillable = [
+    //     'name', 
+    //     'platform_id', 
+    //     'url', 
+    //     'section_id', 
+    //     'iframe'
+    // ];
+
     protected $guarded = ['id'];
 
     public function getCompleteAttribute(){

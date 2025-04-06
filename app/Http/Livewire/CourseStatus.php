@@ -53,7 +53,6 @@ class CourseStatus extends Component
         // $this->course = $this->course->refresh();
         $this->current = Lesson::find($this->current->id);
         $this->course = Course::find($this->course->id);
-        
     }
 
     //Propiedades

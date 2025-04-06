@@ -3,7 +3,7 @@
 @section('title', 'Dashboard')
 
 @section('content_header')
-    <h1>Dashboard</h1>
+    <h1 class="text-primary-emphasis font-weight-bold">Gestión de Niveles</h1>
 @stop
 
 @section('content')
@@ -40,7 +40,7 @@
                             <a class="btn btn-sm btn-outline-secondary mr-2" href="{{ route('admin.levels.edit', $level) }}">
                                 <i class="fas fa-edit"></i> Editar
                             </a>
-                            <form action="{{ route('admin.levels.destroy', $price) }}" method="POST" class="d-inline">
+                            <form action="{{ route('admin.levels.destroy', $level) }}" method="POST" class="d-inline">
                                 @csrf
                                 @method('DELETE')
                                 <button class="btn btn-sm btn-outline-danger" type="submit">

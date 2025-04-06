@@ -10,15 +10,16 @@ use Livewire\Component;
 class CoursesLesson extends Component
 {
     public $section, $lesson, $platforms;
-    public $name, $platform_id = 1, $url;
+    public $name, $platform_id = 1, $url, $duration;
 
     protected $rules = [
         'lesson.name' => 'required|string|max:255',
         'lesson.platform_id' => 'required|integer',
-        'lesson.url' => 'required|url'
+        'lesson.url' => 'required|url',
+        'lesson.duration' => 'required|string|regex:/^\d{2}:\d{2}:\d{2}$/', // Validación para formato HH:MM:SS
     ];
 
-    // Expresiones regulares mejoradas para URL de YouTube y Vimeo
+    // Expresiones regulares para URL de YouTube y Vimeo
     protected $youtubeRegex = '/^(https?:\/\/)?(www\.)?(youtube\.com|youtu\.be)\/(watch\?v=|embed\/|v\/)?([a-zA-Z0-9_-]{11})$/';
     protected $vimeoRegex = '/^(https?:\/\/)?(www\.)?vimeo\.com\/(\d+)(\/)?$/';
 
@@ -36,24 +37,28 @@ class CoursesLesson extends Component
 
     public function store()
     {
-        // Validar datos básicos
+        // Validar los datos ingresados
         $this->validate([
             'name' => 'required|string|max:255',
             'platform_id' => 'required|integer',
-            'url' => 'required|url'
+            'url' => 'required|url',
+            'duration' => 'required|string|regex:/^\d{2}:\d{2}:\d{2}$/',
         ]);
 
         // Validar la URL según la plataforma seleccionada
-        $this->validateUrl($this->url, $this->platform_id);
+        // $this->validateUrl($this->url, $this->platform_id);
 
+        // Crear la lección
         Lesson::create([
             'name' => $this->name,
             'platform_id' => $this->platform_id,
             'url' => $this->url,
-            'section_id' => $this->section->id
+            'duration' => $this->duration,
+            'section_id' => $this->section->id,
         ]);
 
-        $this->reset(['name', 'platform_id', 'url']);
+        // Reiniciar los campos del formulario y actualizar la sección
+        $this->reset(['name', 'platform_id', 'url', 'duration']);
         $this->section = Section::find($this->section->id);
     }
 
@@ -65,18 +70,25 @@ class CoursesLesson extends Component
 
     public function update()
     {
-        // Validar datos básicos
-        $this->validate();
+        // Validar los datos ingresados
+        $this->validate([
+            'lesson.name' => 'required|string|max:255',
+            'lesson.platform_id' => 'required|integer',
+            'lesson.url' => 'required|url',
+            'lesson.duration' => 'required|string|regex:/^\d{2}:\d{2}:\d{2}$/',
+        ]);
 
         // Validar la URL según la plataforma seleccionada
-        $this->validateUrl($this->lesson->url, $this->lesson->platform_id);
+        // $this->validateUrl($this->lesson->url, $this->lesson->platform_id);
 
+        // Guardar los cambios en la lección
         $this->lesson->save();
         $this->section = Section::find($this->section->id);
     }
 
     public function destroy(Lesson $lesson)
     {
+        // Eliminar la lección
         $lesson->delete();
         $this->section = Section::find($this->section->id);
     }

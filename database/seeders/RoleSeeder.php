@@ -20,5 +20,7 @@ class RoleSeeder extends Seeder
 
         $role = Role::create(['name' => 'Instructor']);
         $role->syncPermissions(['Crear cursos', 'Leer cursos', 'Editar cursos', 'Eliminar cursos']);
+
+        $role = Role::create(['name' => 'Estudiante']);
     }
 }

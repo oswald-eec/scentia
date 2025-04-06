@@ -10,6 +10,11 @@
             'route' => route('courses.index'),
             'active' => request()->routeIs('courses.*'),
         ],
+        [
+            'name' => 'Quieres dictar una clase?',
+            'route' => route('teach-class'),
+            'active' => request()->routeIs('teach-class'),
+        ],
     ];
 @endphp
 
@@ -19,9 +24,15 @@
         <div class="flex justify-between h-16">
             <div class="flex">
                 <!-- Logo -->
-                <div class="shrink-0 flex items-center">
-                    <a href="{{ route('home') }}">
-                        <x-application-mark class="block h-9 w-auto" />
+                <div class="flex items-center">
+                    <a href="{{ route('home') }}" class="flex items-center space-x-3 group">
+                        <!-- Logo Icon -->
+                        <x-application-mark class="block h-10 w-10 " />
+                        
+                        <!-- Logo Text -->
+                        <span class="text-2xl font-bold text-gray-600 ">
+                            Scientia
+                        </span>
                     </a>
                 </div>
 
@@ -150,8 +161,8 @@
                             </x-slot>
                         </x-dropdown>                     
                     @else
-                        <a href="{{ route('login') }}" class="text-sm text-gray-700 underline">Iniciar Sesion</a>
-                        <a href="{{ route('register') }}" class="ml-4 text-sm text-gray-700 underline">Registrarse</a>
+                        <a href="{{ route('login') }}" class="text-sm text-gray-700 ">Iniciar Sesion</a>
+                        <a href="{{ route('register') }}" class="ml-4 text-sm text-gray-700 ">Registrarse</a>
                     @endauth
                 </div>
             </div>

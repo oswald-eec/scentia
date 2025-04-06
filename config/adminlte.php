@@ -14,7 +14,7 @@ return [
     |
     */
 
-    'title' => 'AdminLTE 3',
+    'title' => 'Scientia',
     'title_prefix' => '',
     'title_postfix' => '',
 
@@ -63,8 +63,8 @@ return [
     |
     */
 
-    'logo' => '<b>Scentia</b>',
-    'logo_img' => 'vendor/adminlte/dist/img/AdminLTELogo.png',
+    'logo' => '<b>Scientia</b>',
+    'logo_img' => 'vendor/adminlte/dist/img/logo_scientia.png',
     'logo_img_class' => 'brand-image img-circle elevation-3',
     'logo_img_xl' => null,
     'logo_img_xl_class' => 'brand-image-xs',
@@ -86,7 +86,7 @@ return [
     'auth_logo' => [
         'enabled' => false,
         'img' => [
-            'path' => 'vendor/adminlte/dist/img/AdminLTELogo.png',
+            'path' => 'vendor/adminlte/dist/img/logo_scientia.png',
             'alt' => 'Auth Logo',
             'class' => '',
             'width' => 50,
@@ -110,10 +110,10 @@ return [
     */
 
     'preloader' => [
-        'enabled' => true,
+        'enabled' => false,
         'mode' => 'fullscreen',
         'img' => [
-            'path' => 'vendor/adminlte/dist/img/AdminLTELogo.png',
+            'path' => 'vendor/adminlte/dist/img/logo_scientia.png',
             'alt' => 'AdminLTE Preloader Image',
             'effect' => 'animation__shake',
             'width' => 60,
@@ -334,33 +334,57 @@ return [
             'active' => ['admin/roles*']
         ],
         [
+            'text' => 'Promociones',
+            'route' => 'admin.promotions.index',
+            'icon' => 'fas fa-fw fa-users-cog',
+            'can' => 'Listar rol',
+            // 'active' => ['admin/roles*']
+        ],
+        [
             'text' => 'Usuarios',
-            'route' => 'admin.users.index',
             'icon' => 'fas fa-fw fa-users',
-            'can' => 'Leer usuarios',
-            'active' => ['admin/users*']
+            'submenu' => [
+                [
+                    'text' => 'Instructores',
+                    'route' => 'admin.users.index',
+                    'icon' => 'fas fa-fw fa-chalkboard-teacher',
+                    'can' => 'Leer usuarios',
+                    // 'active' => ['admin/users*'],
+                ],
+                [
+                    'text' => 'Estudiantes',
+                    'route' => 'admin.users.students',
+                    'icon' => 'fas fa-fw fa-user-graduate',
+                    'can' => 'Leer usuarios',
+                    // 'active' => ['admin/users*'],
+                ],
+            ]
+                
         ],        
-        ['header' => 'OPCIONES CURSOS'],
+        [
+            'header' => 'GESTIÓN DE CURSOS',
+        ],
         [
             'text' => 'Cursos pendientes',
             'route' => 'admin.courses.index',
-            'icon' => 'fas fa-fw fa-user',
+            'icon' => 'fas fa-fw fa-hourglass-half', // Ícono para "pendientes"
         ],
         [
-            'text' => 'Categorias',
+            'text' => 'Categorías',
             'route' => 'admin.categories.index',
-            'icon' => 'fas fa-fw fa-user',
+            'icon' => 'fas fa-fw fa-layer-group', // Ícono para categorías
         ],
         [
-            'text' => 'Nveles',
+            'text' => 'Niveles',
             'route' => 'admin.levels.index',
-            'icon' => 'fas fa-fw fa-user',
+            'icon' => 'fas fa-fw fa-signal', // Ícono para niveles (progresión)
         ],
         [
             'text' => 'Precios',
             'route' => 'admin.prices.index',
-            'icon' => 'fas fa-fw fa-user',
+            'icon' => 'fas fa-fw fa-dollar-sign', // Ícono para precios
         ],
+        
     //     [
     //         'text' => 'change_password',
     //         'url' => 'admin/settings',
@@ -493,12 +517,12 @@ return [
             ],
         ],
         'Chartjs' => [
-            'active' => false,
+            'active' => true,
             'files' => [
                 [
                     'type' => 'js',
                     'asset' => false,
-                    'location' => '//cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.0/Chart.bundle.min.js',
+                    'location' => '//cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js',
                 ],
             ],
         ],

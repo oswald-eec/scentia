@@ -3,7 +3,7 @@
 @section('title', 'Dashboard')
 
 @section('content_header')
-    <h1>Dashboard</h1>
+    <h1>Panel de Control</h1>
 @stop
 
 @section('content')
@@ -51,7 +51,7 @@
     <div class="col-lg-4 col-6">
         <div class="small-box bg-primary">
             <div class="inner">
-                <h3>43</h3>
+                <h3>{{ $data['students_count'] }}</h3>
                 <p>Estudiantes</p>
             </div>
             <div class="icon">
@@ -85,83 +85,113 @@
     </div>
 </div>
 
-<div class="card mt-4">
-    <div class="card-header">
-        <h3 class="card-title">Estadisticas del Mes</h3>
+<div class="row mt-4">
+    <!-- Cuadros de ventas e ingresos -->
+    <div class="col-md-6">
+        <x-adminlte-card title="Ventas Totales" theme="info" icon="fas fa-shopping-cart">
+            <h3 class="text-center">{{ $salesData->sum('total_sales') }} ventas</h3>
+        </x-adminlte-card>
     </div>
-    <div class="card-body">
-        <div class="row">
-            <!-- Tab Navigation -->
-            <div class="col-12">
-                <ul class="nav nav-tabs" id="stats-tabs" role="tablist">
-                    <li class="nav-item">
-                        <a class="nav-link active" id="top-selling-tab" data-toggle="tab" href="#top-selling" role="tab">Mas Vendidos</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" id="most-popular-tab" data-toggle="tab" href="#most-popular" role="tab">Mas Populares</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" id="top-customers-tab" data-toggle="tab" href="#top-customers" role="tab">Top Usuarios</a>
-                    </li>
-                </ul>
-            </div>
-
-            <!-- Tab Content -->
-            <div class="tab-content col-12 mt-3">
-                <!-- Top Selling Courses -->
-                <div class="tab-pane fade show active" id="top-selling" role="tabpanel">
-                    <ul class="list-group">
-                        @foreach($courses as $course)
-                        <li class="list-group-item d-flex justify-content-between align-items-center">
-                            {{ $course->title }}
-                            <span class="badge badge-success">100 Sales</span>
-                        </li>
-                        @endforeach
-                    </ul>
-                </div>
-
-                <!-- Most Popular Courses -->
-                <div class="tab-pane fade" id="most-popular" role="tabpanel">
-                    <ul class="list-group">
-                        @foreach($courses as $course)
-                        <li class="list-group-item d-flex justify-content-between align-items-center">
-                            {{ $course->title }}
-                            <span class="badge badge-info">5 Stars</span>
-                        </li>
-                        @endforeach
-                    </ul>
-                </div>
-
-                <!-- Top Customers -->
-                <div class="tab-pane fade" id="top-customers" role="tabpanel">
-                    <ul class="list-group">
-                        @foreach($users as $customer)
-                        <li class="list-group-item d-flex justify-content-between align-items-center">
-                            {{ $customer->name }}
-                            <span class="badge badge-primary"> Purchases</span>
-                        </li>
-                        @endforeach
-                    </ul>
-                </div>
-            </div>
-        </div>
+    <div class="col-md-6">
+        <x-adminlte-card title="Ingresos Totales" theme="success" icon="fas fa-dollar-sign">
+            <h3 class="text-center">${{ number_format($salesData->sum('total_revenue'), 2) }}</h3>
+        </x-adminlte-card>
     </div>
 </div>
 
+<div class="row mt-4">
+    <!-- Gráfica de Ventas -->
+    <div class="col-md-12">
+        <x-adminlte-card title="Ventas por Mes y Año" theme="dark" icon="fas fa-chart-bar">
+            <canvas id="salesChart"></canvas>
+        </x-adminlte-card>
+    </div>
+</div>
 
-@stop
+<div class="row mt-4">
+    <!-- Cursos más vendidos -->
+    <div class="col-md-6">
+        <x-adminlte-card title="Cursos Más Vendidos" theme="info" icon="fas fa-star">
+            <ul class="list-group">
+                @foreach($mostPurchasedCourses as $course)
+                    <li class="list-group-item d-flex justify-content-between align-items-center">
+                        {{ $course->title }}
+                        <span class="badge badge-primary">{{ $course->buyers->count() }} compras</span>
+                    </li>
+                @endforeach
+            </ul>
+        </x-adminlte-card>
+    </div>
 
-{{-- @section('css')
-    Add here extra stylesheets
-    <link rel="stylesheet" href="/css/admin_custom.css">
+    <!-- Usuarios con más compras -->
+    <div class="col-md-6">
+        <x-adminlte-card title="Top Clientes" theme="success" icon="fas fa-user">
+            <ul class="list-group">
+                @foreach($topCustomers as $customer)
+                    <li class="list-group-item d-flex justify-content-between align-items-center">
+                        <strong>{{ $customer->name }}</strong>
+                        <div>
+                            <span class="badge badge-success">Cursos comprados: {{ $customer->courses_enrolled_count }}</span>
+                            {{-- @foreach($customer->coursesPurchased as $course)
+                                <span class="badge badge-secondary">{{ $course->title }}</span>
+                            @endforeach --}}
+                        </div>
+                    </li>
+                @endforeach
+            </ul>
+        </x-adminlte-card>
+    </div>
+</div>
 @stop
 
 @section('js')
-    <script> console.log("Hi, I'm using the Laravel-AdminLTE package!"); </script>
-@stop --}}
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+    // Preparar datos para el gráfico
+    const salesData = @json($salesData);
 
-<!-- Dropdown menu -->
+    const labels = salesData.map(item => `${item.month}/${item.year}`);
+    const monthlySales = salesData.map(item => item.total_sales);
+    const annualSales = salesData.reduce((acc, item) => {
+        const yearLabel = `${item.year}`;
+        acc[yearLabel] = (acc[yearLabel] || 0) + item.total_sales;
+        return acc;
+    }, {});
 
-<!-- Navbar -->
+    const annualLabels = Object.keys(annualSales);
+    const annualTotals = Object.values(annualSales);
 
-
+    // Configurar el gráfico
+    const ctx = document.getElementById('salesChart').getContext('2d');
+    new Chart(ctx, {
+        type: 'bar',
+        data: {
+            labels: labels,
+            datasets: [
+                {
+                    label: 'Ventas Mensuales',
+                    data: monthlySales,
+                    backgroundColor: 'rgba(54, 162, 235, 0.6)',
+                    borderColor: 'rgba(54, 162, 235, 1)',
+                    borderWidth: 1,
+                },
+                {
+                    label: 'Ventas Anuales',
+                    data: annualTotals,
+                    backgroundColor: 'rgba(255, 99, 132, 0.6)',
+                    borderColor: 'rgba(255, 99, 132, 1)',
+                    borderWidth: 1,
+                },
+            ],
+        },
+        options: {
+            responsive: true,
+            scales: {
+                y: {
+                    beginAtZero: true,
+                },
+            },
+        },
+    });
+</script>
+@stop

@@ -84,24 +84,50 @@
             <section class="bg-white shadow-lg rounded-lg overflow-hidden mb-8">
                 <div class="px-6 py-4">
                     <div class="flex items-center">
-                        <img class="h-12 w-12 object-cover rounded-full shadow-lg" src="{{ $course->teacher->profile_photo_url }}" alt="Foto de {{ $course->teacher->name }}" loading="lazy">
+                        <img 
+                            class="h-12 w-12 object-cover rounded-full shadow-lg" 
+                            src="{{ $course->teacher->profile_photo_url }}" 
+                            alt="Foto de {{ $course->teacher->name }}" 
+                            loading="lazy">
                         <div class="ml-4">
-                            <h1 class="font-bold text-lg text-gray-500">Prof. {{ $course->teacher->name }}</h1>
-                            <a class="text-blue-400 text-sm font-bold" href="">{{ '@' . Str::slug($course->teacher->name, '') }}</a>
+                            <h1 class="font-bold text-lg text-gray-700">Prof. {{ $course->teacher->name }}</h1>
+                            <a class="text-blue-500 text-sm font-bold hover:underline" href="#">
+                                {{ '@' . Str::slug($course->teacher->name, '') }}
+                            </a>
                         </div>
                     </div>
-                    
+
                     @can('enrolled', $course)
-                        <a class="block text-center w-full mt-4 bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded transition duration-300" href="{{ route('course.status',$course) }}">Continuar con el Curso</a>
+                        <a 
+                            class="block text-center w-full mt-4 bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded transition duration-300" 
+                            href="{{ route('course.status', $course) }}">
+                            Continuar con el Curso
+                        </a>
                     @else
-                        <form action="{{ route('courses.enrolled', $course) }}" method="POST">
-                            @csrf
-                            <button class="block text-center w-full mt-4 bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded transition duration-300">Llevar el curso</button>
-                        </form>
+                        @if ($course->price->value == 0)
+                            <!-- Indicador de curso GRATIS -->
+                            <p class="text-2xl font-bold text-green-500 inline-block py-1 px-3 mt-3 mb-2">GRATIS</p>
+                            <form action="{{ route('courses.enrolled', $course) }}" method="POST">
+                                @csrf
+                                <button 
+                                    class="block text-center w-full bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded transition duration-300">
+                                    Llevar el curso
+                                </button>
+                            </form>
+                        @else
+                            <!-- Precio del curso -->
+                            <p class="text-2xl font-bold text-gray-700 mt-3 mb-2">BS {{ number_format($course->price->value, 2) }}</p>
+                            <a 
+                                href="{{ route('payment.checkout', $course) }}" 
+                                class="block text-center w-full bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded transition duration-300">
+                                Comprar este Curso
+                            </a>
+                        @endif
                     @endcan
 
                 </div>
             </section>
+
 
             <!-- Cursos Similares -->
             <section>

@@ -7,6 +7,7 @@ use App\Models\Category;
 use App\Models\Course;
 use App\Models\Level;
 use App\Models\Price;
+use App\Models\Subcategory;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 
@@ -15,7 +16,7 @@ class CourseController extends Controller
     public function __construct()
     {
         $this->middleware('can:Leer cursos')->only('index');
-        $this->middleware('can:Crear cursos')->only('create', 'store');
+        $this->middleware('can:Crear cursos')->only('create', 'store', 'getSubcategories' );
         $this->middleware('can:Editar cursos')->only('edit','update','goals');
         $this->middleware('can:Eliminar cursos')->only('destroy');
     }
@@ -38,10 +39,11 @@ class CourseController extends Controller
     public function create()
     {
         $categories = Category::pluck('name', 'id');
+        $subcategories = Subcategory::pluck('name', 'id');
         $levels = Level::pluck('name', 'id');
         $prices = Price::pluck('name', 'id');
 
-        return view('instructor.courses.create', compact('categories','levels','prices'));
+        return view('instructor.courses.create', compact('categories','subcategories','levels','prices'));
     }
 
     /**
@@ -58,9 +60,13 @@ class CourseController extends Controller
             'subtitle' => 'required|string|max:255',
             'description' => 'required|string',
             'category_id' => 'required|exists:categories,id',
+            'subcategory_id' => 'required|exists:subcategories,id',
             'level_id' => 'required|exists:levels,id',
             'price_id' => 'required|exists:prices,id',
             'file' => 'nullable|image|max:2048', // Valida que la imagen no sea mayor a 2MB
+            'hotmart_url' => 'nullable|url|max:255',
+            'hotmart_id' => 'nullable|string|max:255|unique:courses,hotmart_id',
+            'hotmart_link' => 'nullable|url|max:255',
         ]);
 
         $course = Course::create($request->all());
@@ -98,10 +104,11 @@ class CourseController extends Controller
         $this->authorize('dicatated', $course);
 
         $categories = Category::pluck('name', 'id');
+        $subcategories = Subcategory::pluck('name', 'id');
         $levels = Level::pluck('name', 'id');
         $prices = Price::pluck('name', 'id');
 
-        return view('instructor.courses.edit', compact('course', 'categories', 'levels', 'prices'));
+        return view('instructor.courses.edit', compact('course', 'categories', 'subcategories', 'levels', 'prices'));
     }
 
     /**
@@ -120,14 +127,18 @@ class CourseController extends Controller
             'subtitle' => 'required|string|max:255',
             'description' => 'required|string',
             'category_id' => 'required|exists:categories,id',
+            'subcategory_id' => 'required|exists:subcategories,id',
             'level_id' => 'required|exists:levels,id',
             'price_id' => 'required|exists:prices,id',
             'file' => 'nullable|image|max:2048', // Valida que la imagen no sea mayor a 2MB
+            'hotmart_url' => 'nullable|url|max:255',
+            'hotmart_id' => 'nullable|string|max:255|unique:courses,hotmart_id',
+            'hotmart_link' => 'nullable|url|max:255',
         ]);
 
         // Actualización del curso
         $course->update($request->only([
-            'title', 'slug', 'subtitle', 'description', 'category_id', 'level_id', 'price_id'
+            'title', 'slug', 'subtitle', 'description', 'category_id', 'level_id', 'price_id', 'hotmart_url', 'hotmart_id'
         ]));
 
         // Actualización de la imagen si se carga una nueva
@@ -167,5 +178,12 @@ class CourseController extends Controller
         $course->status =2;
         $course->save();
         return back();
+    }
+
+    public function getSubcategories($categoryId)
+    {
+        $subcategories = Subcategory::where('category_id', $categoryId)->pluck('name', 'id');
+        dd($subcategories);
+        return response()->json($subcategories);
     }
 }

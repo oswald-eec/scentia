@@ -3,11 +3,11 @@
 @section('title', 'Dashboard')
 
 @section('content_header')
-    <h1 class="text-primary-emphasis font-weight-bold">Gestión de Usuarios</h1>
+    <h1 class="text-primary-emphasis font-weight-bold">Gestión de Instructores</h1>
 @stop
 
 @section('content')
-    @livewire('admin-users')
+@livewire('admin-users', ['role' => 'Instructor'])
 @stop
 
 @section('css')
