@@ -9,8 +9,7 @@ cmds = [
   "chmod -R 777 storage bootstrap/cache",  # permisos antes de optimizar
   "php artisan migrate --force --seed",
   "php artisan optimize",
-  "php artisan storage:link",
-  "chmod -R 755 public/build"
+  "php artisan storage:link"
 ]
 
 [start]
