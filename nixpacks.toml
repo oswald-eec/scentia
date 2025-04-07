@@ -7,7 +7,7 @@ cmds = [
   "npm install",
   "npm run build",
   "chmod -R 777 storage bootstrap/cache",  # permisos antes de optimizar
-  php artisan migrate:fresh --seed --force,
+  "php artisan migrate:fresh --seed --force",
   "php artisan optimize",
   "php artisan storage:link",
   #"chmod -R 755 public/build"
