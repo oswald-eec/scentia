@@ -1,6 +1,6 @@
 <div>
     <!-- Barra de filtros -->
-    <div class="bg-gray-200 py-2 mb-16 z-50">
+    {{-- <div class="bg-gray-200 py-2 mb-16 z-50">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center">
             <!-- Botón de resetear filtros -->
             <button class="bg-white shadow h-12 px-4 rounded-lg text-gray-700 flex items-center mr-4 hover:bg-gray-100 transition-colors duration-200"
@@ -61,7 +61,77 @@
                 </div>
             </div>
         </div>
+    </div> --}}
+    <div class="bg-gray-100 py-4 px-4 sm:px-6 lg:px-8 mb-10 z-50 shadow-sm">
+    <div class="max-w-7xl mx-auto flex flex-col md:flex-row md:items-center md:justify-start gap-4">
+        
+        <!-- Botón Reset Filtros -->
+        <button wire:click="resetFilters"
+            class="flex items-center px-4 py-2 bg-white text-gray-800 text-sm font-medium rounded-lg shadow hover:bg-gray-200 transition-colors duration-200"
+            aria-label="Restablecer filtros">
+            <i class='fas fa-archive mr-2 text-gray-500' style='font-size:20px'></i>
+            Todos los Cursos
+        </button>
+
+        <!-- Dropdown Categorías -->
+        <div class="relative" x-data="{ open: false }" x-id="['category-dropdown']">
+            <button @click="open = !open"
+                class="flex items-center px-4 py-2 bg-white text-gray-800 text-sm font-medium rounded-lg shadow hover:bg-gray-200 transition-colors duration-200"
+                :aria-expanded="open"
+                :aria-controls="$id('category-dropdown')">
+
+                <i class='fas fa-layer-group mr-2 text-gray-500' style='font-size:20px'></i>
+                
+                Categoría
+                <svg class="w-4 h-4 ml-2 text-gray-500" fill="none" stroke="currentColor" stroke-width="2"
+                    viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7" />
+                </svg>
+            </button>
+
+            <div x-show="open" x-cloak x-transition
+                :id="$id('category-dropdown')"
+                class="absolute z-10 mt-2 w-44 bg-white border rounded-lg shadow-lg overflow-hidden">
+                @foreach ($categories as $category)
+                    <a href="#" class="block px-4 py-2 text-sm text-gray-800 hover:bg-blue-500 hover:text-white transition"
+                        wire:click="$set('category_id', {{ $category->id }})"
+                        @click="open = false">
+                        {{ $category->name }}
+                    </a>
+                @endforeach
+            </div>
+        </div>
+
+        <!-- Dropdown Niveles -->
+        <div class="relative" x-data="{ open: false }" x-id="['level-dropdown']">
+            <button @click="open = !open"
+                class="flex items-center px-4 py-2 bg-white text-gray-800 text-sm font-medium rounded-lg shadow hover:bg-gray-200 transition-colors duration-200"
+                :aria-expanded="open"
+                :aria-controls="$id('level-dropdown')">
+                <i class='fas fa-swatchbook mr-2 text-gray-500' style='font-size:20px'></i>
+
+                Niveles
+                <svg class="w-4 h-4 ml-2 text-gray-500" fill="none" stroke="currentColor" stroke-width="2"
+                    viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7" />
+                </svg>
+            </button>
+
+            <div x-show="open" x-cloak x-transition
+                :id="$id('level-dropdown')"
+                class="absolute z-10 mt-2 w-44 bg-white border rounded-lg shadow-lg overflow-hidden">
+                @foreach ($levels as $level)
+                    <a href="#" class="block px-4 py-2 text-sm text-gray-800 hover:bg-blue-500 hover:text-white transition"
+                        wire:click="$set('level_id', {{ $level->id }})"
+                        @click="open = false">
+                        {{ $level->name }}
+                    </a>
+                @endforeach
+            </div>
+        </div>
     </div>
+</div>
+
 
     <!-- Tarjetas de cursos -->
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-x-6 gap-y-8">

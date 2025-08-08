@@ -97,7 +97,7 @@
                         </div>
                     </div>
 
-                    @can('enrolled', $course)
+                    {{-- @can('enrolled', $course)
                         <a 
                             class="block text-center w-full mt-4 bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded transition duration-300" 
                             href="{{ route('course.status', $course) }}">
@@ -123,7 +123,47 @@
                                 Comprar este Curso
                             </a>
                         @endif
+                    @endcan --}}
+                    @can('enrolled', $course)
+                        <a 
+                            class="block text-center w-full mt-4 bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded transition duration-300" 
+                            href="{{ route('course.status', $course) }}">
+                            Continuar con el Curso
+                        </a>
+                    @else
+                        @if ($hasPendingAirtm)
+                            <!-- Botón deshabilitado por pago pendiente vía AirTM -->
+                            <p class="text-yellow-600 text-sm font-medium mt-3 mb-1 text-center">
+                                Tu comprobante está en revisión. No puedes realizar otro pago por ahora.
+                            </p>
+                            <button 
+                                class="block text-center w-full bg-yellow-400 text-white font-bold py-2 px-4 rounded opacity-70 cursor-not-allowed"
+                                disabled>
+                                Pago Pendiente de Aprobación (AirTM)
+                            </button>
+                        @elseif ($course->price->value == 0)
+                            <!-- Curso gratuito -->
+                            <p class="text-2xl font-bold text-green-500 inline-block py-1 px-3 mt-3 mb-2">GRATIS</p>
+                            <form action="{{ route('courses.enrolled', $course) }}" method="POST">
+                                @csrf
+                                <button 
+                                    class="block text-center w-full bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded transition duration-300">
+                                    Llevar el curso
+                                </button>
+                            </form>
+                        @else
+                            <!-- Curso pagado -->
+                            <p class="text-2xl font-bold text-gray-700 mt-3 mb-2">
+                                Bs {{ number_format($course->price->value, 2) }}
+                            </p>
+                            <a 
+                                href="{{ route('payment.checkout', $course) }}" 
+                                class="block text-center w-full bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded transition duration-300">
+                                Comprar este Curso
+                            </a>
+                        @endif
                     @endcan
+
 
                 </div>
             </section>

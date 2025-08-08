@@ -212,90 +212,6 @@
         </div>
     </section>
     
-    {{-- <section class="bg-gray-100 mt-24">
-        <div class="container mx-auto px-6">
-            <h2 class="text-center text-4xl text-gray-800 font-bold">Resenas Populares</h2>
-            <p class="text-center text-gray-500 text-lg mt-4 mb-10">
-                Mira lo que opinan algunos de nuestros estudiantes
-            </p>
-    
-            <!-- Slider Principal -->
-            <div class="swiper mySwiper">
-                <div class="swiper-wrapper">
-                    <!-- Tarjeta de comentario 1 -->
-                    <div class="swiper-slide bg-white rounded-lg shadow-lg p-6 flex flex-col items-center">
-                        <img class="w-16 h-16 rounded-full mb-4" src="https://via.placeholder.com/150" alt="Foto de perfil">
-                        <h3 class="font-semibold text-lg">Juan Pérez</h3>
-                        <p class="text-sm text-gray-500">Curso: Introducción a la Programación</p>
-                        <p class="mt-4 text-gray-600 text-center">"El curso fue muy completo y los conceptos están bien explicados. Lo recomiendo a cualquiera que quiera iniciarse en programación."</p>
-                    </div>
-                    <!-- Tarjeta de comentario 2 -->
-                    <div class="swiper-slide bg-white rounded-lg shadow-lg p-6 flex flex-col items-center">
-                        <img class="w-16 h-16 rounded-full mb-4" src="https://via.placeholder.com/150" alt="Foto de perfil">
-                        <h3 class="font-semibold text-lg">Ana López</h3>
-                        <p class="text-sm text-gray-500">Curso: Marketing Digital</p>
-                        <p class="mt-4 text-gray-600 text-center">"Aprendí mucho sobre estrategias de marketing y herramientas digitales. ¡Excelente contenido y profesores!"</p>
-                    </div>
-                    <!-- Tarjeta de comentario 3 -->
-                    <div class="swiper-slide bg-white rounded-lg shadow-lg p-6 flex flex-col items-center">
-                        <img class="w-16 h-16 rounded-full mb-4" src="https://via.placeholder.com/150" alt="Foto de perfil">
-                        <h3 class="font-semibold text-lg">Luis Gómez</h3>
-                        <p class="text-sm text-gray-500">Curso: Diseño Web con TailwindCSS</p>
-                        <p class="mt-4 text-gray-600 text-center">"Un curso increíble para aprender a diseñar interfaces modernas y responsivas. Todo explicado paso a paso."</p>
-                    </div>
-                </div>
-                <!-- Botones de navegación -->
-                <div class="swiper-button-next"></div>
-                <div class="swiper-button-prev"></div>
-                <!-- Paginación -->
-                <div class="swiper-pagination"></div>
-            </div>
-        </div>
-    </section> --}}
-    
-    {{-- <section class="bg-gray-100 py-16">
-        <div class="container mx-auto px-6">
-            <h2 class="text-3xl font-bold text-center mb-8">Comentarios de nuestros estudiantes</h2>
-    
-            <!-- Slider Principal -->
-            <div class="swiper mySwiper">
-                <div class="swiper-wrapper">
-                    @foreach ($reviews as $review)
-                        <div class="swiper-slide bg-white rounded-lg shadow-lg p-6 flex flex-col items-center">
-                            <!-- Imagen de perfil -->
-                            <img class="w-16 h-16 rounded-full mb-4" 
-                                 src="{{ $review->user->profile_photo_url ? asset($review->user->profile_photo_url) : asset('default-avatar.png') }}" 
-                                 alt="{{ $review->user->name }}">
-                            <!-- Nombre del usuario -->
-                            <h3 class="font-semibold text-lg">{{ $review->user->name }}</h3>
-                            <!-- Nombre del curso -->
-                            <p class="text-sm text-gray-500">
-                                Curso: {{ $review->course->title }}
-                            </p>
-                            <!-- Comentario -->
-                            <p class="mt-4 text-gray-600 text-center">"{{ $review->comment }}"</p>
-                            
-                        </div>
-                    @endforeach
-                </div>
-                
-                <!-- Botones de navegación personalizados -->
-                <button class="custom-prev rounded-full w-10 h-10 bg-white shadow-lg flex items-center justify-center text-blue-600 transition-all hover:bg-blue-50 absolute z-10">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
-                    </svg>
-                </button>
-
-                <button class="custom-next rounded-full w-10 h-10 bg-white shadow-lg flex items-center justify-center text-blue-600 transition-all hover:bg-blue-50 absolute z-10">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
-                    </svg>
-                </button>
-                <!-- Paginación -->
-                <div class="swiper-pagination"></div>
-            </div>
-        </div>
-    </section> --}}
 
     <section class="bg-gray-100 mt-24">
         <div class="container mx-auto px-6">
@@ -330,31 +246,6 @@
     
     <!-- Footer -->
     <x-footer />
-    {{-- <footer class="bg-gray-900 text-white py-12 mt-24 ">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 grid grid-cols-1 md:grid-cols-4 gap-8">
-            <div>
-                <h3 class="text-lg font-bold">Nosotros</h3>
-                <a href="{{ route('contact.index') }}" class="block text-gray-400 mt-2">Contáctanos</a>
-            </div>
-            <div>
-                <h3 class="text-lg font-bold">Enlaces Útiles</h3>
-                <a href="#" class="block text-gray-400 mt-2">Términos y Condiciones</a>
-            </div>
-            <div>
-                <h3 class="text-lg font-bold">Explora</h3>
-                <a href="#" class="block text-gray-400 mt-2">Categorías</a>
-            </div>
-            <div>
-                <h3 class="text-lg font-bold">Redes Sociales</h3>
-                <div class="mt-4">
-                    <a href="#" class="mr-3 text-gray-400"><i class="fab fa-facebook-f"></i></a>
-                    <a href="#" class="mr-3 text-gray-400"><i class="fab fa-twitter"></i></a>
-                    <a href="#" class="text-gray-400"><i class="fab fa-linkedin-in"></i></a>
-                </div>
-            </div>
-        </div>
-        <div class="text-center mt-8 text-gray-400 text-sm">&copy; 2024 Scientia. Todos los derechos reservados.</div>
-    </footer> --}}
 
     <!-- Inicialización de Swiper -->
     <script>
@@ -363,8 +254,22 @@
 
             sliders.forEach((slider) => {
                 new Swiper(slider, {
-                    slidesPerView: 4, // Mostrar 4 tarjetas por fila
+                    slidesPerView: 1, // Mostrar 4 tarjetas por fila
                     spaceBetween: 16, // Espaciado entre tarjetas
+                    breakpoints: {
+                        640: {
+                            slidesPerView: 1, // Mostrar 1 tarjeta en pantallas pequeñas
+                        },
+                        768: {
+                            slidesPerView: 2, // Mostrar 2 tarjetas en pantallas medianas
+                        },
+                        1024: {
+                            slidesPerView: 3, // Mostrar 3 tarjetas en pantallas grandes
+                        },
+                        1200: {
+                            slidesPerView: 4, // Mostrar 3 tarjetas en pantallas grandes
+                        },
+                    },
                     loop: false, // No repetir contenido
                     navigation: {
                         nextEl: slider.closest('section').querySelector('.custom-next'), // Botón personalizado

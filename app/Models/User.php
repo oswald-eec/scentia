@@ -108,4 +108,10 @@ class User extends Authenticatable
     {
         return $this->belongsToMany(Category::class, 'category_user');
     }
+
+    public function payments()
+    {
+        return $this->hasMany(Payment::class);
+    }
+
 }

@@ -384,7 +384,19 @@ return [
             'route' => 'admin.prices.index',
             'icon' => 'fas fa-fw fa-dollar-sign', // Ícono para precios
         ],
-        
+        [
+            'header' => 'GESTIÓN DE PAGOS',
+        ],
+        [
+            'text' => 'Liquidaciones',
+            'route' => 'admin.payouts.index',
+            'icon' => 'fas fa-fw fa-hourglass-half', // Ícono para "pendientes"
+        ],
+        [
+            'text' => 'Pagos manuales',
+            'route' => 'admin.manual-payments.index',
+            'icon' => 'fas fa-fw fa-hourglass-half', // Ícono para "pendientes"
+        ],
     //     [
     //         'text' => 'change_password',
     //         'url' => 'admin/settings',
