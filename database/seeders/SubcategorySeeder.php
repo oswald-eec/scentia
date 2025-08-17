@@ -6,6 +6,8 @@ use App\Models\Category;
 use App\Models\Subcategory;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Str;
+
 
 class SubcategorySeeder extends Seeder
 {
@@ -16,47 +18,22 @@ class SubcategorySeeder extends Seeder
      */
     public function run()
     {
-        // Obtener las categorías existentes
-        $webDevelopment = Category::where('name', 'Desarrollo Web')->first();
-        $electronics = Category::where('name', 'Electronica')->first();
-        $masonry = Category::where('name', 'Albañileria')->first();
+        $map = [
+            'Desarrollo Web' => ['Frontend', 'Backend', 'Full Stack'],
+            'Electrónica' => ['Robótica', 'Microcontroladores'],
+            'Albañilería' => ['Estructuras', 'Revestimientos'],
+        ];
 
-        // Subcategorías de Desarrollo Web
-        Subcategory::create([
-            'name' => 'Frontend',
-            'category_id' => $webDevelopment->id
-        ]);
+        foreach ($map as $categoryName => $subcategories) {
+            $category = Category::where('name', $categoryName)->first();
 
-        Subcategory::create([
-            'name' => 'Backend',
-            'category_id' => $webDevelopment->id
-        ]);
-
-        Subcategory::create([
-            'name' => 'Full Stack',
-            'category_id' => $webDevelopment->id
-        ]);
-
-        // Subcategorías de Electrónica
-        Subcategory::create([
-            'name' => 'Robótica',
-            'category_id' => $electronics->id
-        ]);
-
-        Subcategory::create([
-            'name' => 'Microcontroladores',
-            'category_id' => $electronics->id
-        ]);
-
-        // Subcategorías de Albañilería
-        Subcategory::create([
-            'name' => 'Estructuras',
-            'category_id' => $masonry->id
-        ]);
-
-        Subcategory::create([
-            'name' => 'Revestimientos',
-            'category_id' => $masonry->id
-        ]);
+            foreach ($subcategories as $name) {
+                Subcategory::create([
+                    'name' => $name,
+                    'slug' => Str::slug($name),
+                    'category_id' => $category->id,
+                ]);
+            }
+        }
     }
 }

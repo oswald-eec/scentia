@@ -9,6 +9,7 @@ use App\Http\Controllers\Admin\PayoutController;
 use App\Http\Controllers\Admin\PriceController;
 use App\Http\Controllers\Admin\PromotionController;
 use App\Http\Controllers\Admin\RoleController;
+use App\Http\Controllers\Admin\SubcategoryController;
 use App\Http\Controllers\Admin\UserController;
 use Illuminate\Support\Facades\Route;
 
@@ -21,6 +22,7 @@ Route::get('users/students', [UserController::class, 'indexStudents'])->name('us
 
 
 Route::resource('categories', CategoryController::class)->names('categories');
+Route::resource('subcategories', SubcategoryController::class)->names('subcategories');
 
 Route::resource('levels', LevelController::class)->names('levels');
 

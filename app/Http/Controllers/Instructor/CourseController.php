@@ -39,7 +39,8 @@ class CourseController extends Controller
     public function create()
     {
         $categories = Category::pluck('name', 'id');
-        $subcategories = Subcategory::pluck('name', 'id');
+        $subcategories = [];
+        //$subcategories = Subcategory::pluck('name', 'id');
         $levels = Level::pluck('name', 'id');
         $prices = Price::pluck('name', 'id');
 
@@ -138,7 +139,7 @@ class CourseController extends Controller
 
         // Actualización del curso
         $course->update($request->only([
-            'title', 'slug', 'subtitle', 'description', 'category_id', 'level_id', 'price_id', 'hotmart_url', 'hotmart_id'
+            'title', 'slug', 'subtitle', 'description', 'category_id', 'subcategory_id', 'level_id', 'price_id', 'hotmart_url', 'hotmart_id'
         ]));
 
         // Actualización de la imagen si se carga una nueva
@@ -180,10 +181,13 @@ class CourseController extends Controller
         return back();
     }
 
-    public function getSubcategories($categoryId)
+    public function getSubcategories($id)
     {
-        $subcategories = Subcategory::where('category_id', $categoryId)->pluck('name', 'id');
-        dd($subcategories);
-        return response()->json($subcategories);
+        $list = Subcategory::where('category_id', $id)
+                        ->orderBy('name')
+                        ->get(['id', 'name']);
+
+        return response()->json($list);
     }
+
 }

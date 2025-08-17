@@ -27,7 +27,7 @@ return new class extends Migration
             ])->default(Course::BORRADOR);
             $table->string('slug')->unique();
             // $table->string('image')->nullable();
-            $table->string('promo_video')->nullable();
+            // $table->string('promo_video')->nullable();
 
             $table->string('hotmart_url')->nullable();
             $table->string('hotmart_id')->nullable();

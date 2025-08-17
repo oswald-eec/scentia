@@ -52,34 +52,47 @@
     @enderror
 </div>
 
-<!-- Selección de categoría, nivel y precio -->
+<!-- Selección de categoría y subcategoría -->
 <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-4">
+    
+    {{-- Categoría --}}
     <div>
-        <!-- Selección de Categoría -->
         {!! Form::label('category_id', 'Categoría', ['class' => 'block font-semibold text-gray-700 mb-1']) !!}
-        {!! Form::select('category_id', $categories, null, [
-            'class' => 'form-input rounded-md block w-full mt-1 focus:ring-indigo-500 focus:border-indigo-500',
-            'id' => 'category_id',
-            'placeholder' => 'Selecciona una categoría',
-        ]) !!}
+        {!! Form::select(
+            'category_id',
+            $categories,
+            old('category_id'), // respeta valor previo
+            [
+                'id' => 'category_id',
+                'placeholder' => 'Selecciona una categoría',
+                'class' => 'form-input rounded-md block w-full mt-1 focus:ring-indigo-500 focus:border-indigo-500' . ($errors->has('category_id') ? ' border-red-600' : ''),
+            ]
+        ) !!}
         @error('category_id')
-            <span class="text-sm text-red-600">{{ $message }}</span>
+            <p class="text-sm text-red-600 mt-1">{{ $message }}</p>
         @enderror
     </div>
-    
-    <!-- Subcategoría del curso -->
-    <div class="mb-4">
+
+    {{-- Subcategoría --}}
+    <div>
         {!! Form::label('subcategory_id', 'Subcategoría', ['class' => 'block font-semibold text-gray-700 mb-1']) !!}
-        {!! Form::select('subcategory_id', $subcategories, null, [
-            'class' => 'form-input rounded-md block w-full mt-1 focus:ring-indigo-500 focus:border-indigo-500' . ($errors->has('subcategory_id') ? ' border-red-600' : ''),
-            'placeholder' => 'Selecciona una subcategoría',
-        ]) !!}
+        {!! Form::select(
+            'subcategory_id',
+            $subcategories, // vacío al crear
+            old('subcategory_id'),
+            [
+                'id' => 'subcategory_id',
+                'placeholder' => 'Selecciona una subcategoría',
+                'class' => 'form-input rounded-md block w-full mt-1 focus:ring-indigo-500 focus:border-indigo-500' . ($errors->has('subcategory_id') ? ' border-red-600' : ''),
+                'disabled' => true, // se habilita cuando carguen
+            ]
+        ) !!}
         @error('subcategory_id')
-            <span class="text-sm text-red-600">{{ $message }}</span>
+            <p class="text-sm text-red-600 mt-1">{{ $message }}</p>
         @enderror
     </div>
-    
 </div>
+
 
 <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-4">
     <div>
@@ -110,7 +123,7 @@
             <img 
                 id="picture" 
                 class="w-full h-64 object-cover object-center rounded-md mt-1 focus:ring-indigo-500 focus:border-indigo-500" 
-                src="{{ asset($course->image->url ?? 'img/default/img_default.jpg') }}" 
+                src="{{ asset('storage/' . $course->image->url ?? 'img/default/img_default.jpg') }}" 
                 alt="Imagen del curso"
             >
         </figure>
@@ -121,6 +134,8 @@
                 'accept' => 'image/*',
             ]) !!}
             <p class="text-sm text-gray-500 mt-1">Sube una imagen clara y relevante para tu curso. Debe cumplir con nuestros estándares de calidad para ser aceptada. Requisitos importantes: 750x500 píxeles; .jpg, .jpeg, .gif o .png. Sin texto.</p>
+
+            {{-- <p>{{$course->image->url}}</p> --}}
             @error('file')
                 <span class="text-sm text-red-600">{{ $message }}</span>
             @enderror
@@ -129,7 +144,7 @@
 </div>
 
 <!-- Imagen del curso -->
-<div class="mb-6">
+{{-- <div class="mb-6">
     <h2 class="font-semibold text-gray-700 mb-2">Video promocional del curso</h2>
     <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
         <figure>
@@ -152,9 +167,9 @@
             @enderror
         </div>
     </div>
-</div>
+</div> --}}
 
-<hr class="mt-6 border-gray-300">
+{{-- <hr class="mt-6 border-gray-300">
 <h1 class="text-xl font-bold text-gray-800 mt-4">Método de Pago: Hotmart</h1>
 <p class="text-sm text-gray-500 mt-2">
     Agrega la URL e ID del curso en Hotmart una vez que hayas cargado todo el material del curso.
@@ -195,7 +210,46 @@
     </div>
 
     
-</div>
+</div>--}}
+
+{{-- @push('js')
+    <script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const categorySelect = document.getElementById('category_id');
+        const subcategorySelect = document.getElementById('subcategory_id');
+
+        categorySelect.addEventListener('change', function () {
+            const categoryId = this.value;
+            subcategorySelect.innerHTML = '<option value="">Cargando...</option>';
+
+            if (categoryId) {
+                fetch(`/instructor/courses/subcategories/${categoryId}`)
+                    .then(response => {
+                        if (!response.ok) {
+                            throw new Error('Error en la respuesta del servidor');
+                        }
+                        return response.json();
+                    })
+                    .then(data => {
+                        subcategorySelect.innerHTML = '<option value="">Selecciona una subcategoría</option>';
+                        Object.entries(data).forEach(([id, name]) => {
+                            const option = document.createElement('option');
+                            option.value = id;
+                            option.textContent = name;
+                            subcategorySelect.appendChild(option);
+                        });
+                    })
+                    .catch(error => {
+                        console.error('Error cargando subcategorías:', error);
+                        subcategorySelect.innerHTML = '<option value="">Error al cargar</option>';
+                    });
+            } else {
+                subcategorySelect.innerHTML = '<option value="">Selecciona una subcategoría</option>';
+            }
+        });
+    });
+    </script>
+@endpush --}}
 
 
 
