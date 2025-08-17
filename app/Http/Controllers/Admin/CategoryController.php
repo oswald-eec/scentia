@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\Category;
 use Illuminate\Http\Request;
+use Illuminate\Support\Str;
 
 class CategoryController extends Controller
 {
@@ -15,8 +16,8 @@ class CategoryController extends Controller
      */
     public function index()
     {
-        $categories = Category::all();
-        return view('admin.categories.index',compact('categories'));
+        $categories = Category::with('subcategories')->latest()->paginate(3);
+        return view('admin.categories.index', compact('categories'));
     }
 
     /**
@@ -47,10 +48,14 @@ class CategoryController extends Controller
         ]);
 
         // Creación de la categoría
-        $category = Category::create($validatedData);
+        $category = Category::create([
+            'name' => ucfirst(trim($validatedData['name'])),
+            'slug' => Str::slug($validatedData['name']),
+        ]);
 
         // Redirección con un mensaje de éxito
-        return redirect()->route('admin.categories.index')->with('success', 'La categoría ha sido creada exitosamente.');
+        return redirect()->route('admin.categories.index')
+                         ->with('success', 'La categoría ha sido creada exitosamente.');
     }
 
 
@@ -62,6 +67,7 @@ class CategoryController extends Controller
      */
     public function show(Category $category)
     {
+
         return view('admin.categories.show',compact('category'));
     }
 
@@ -95,7 +101,10 @@ class CategoryController extends Controller
         ]);
 
         // Actualización de la categoría
-        $category->update($validatedData);
+        $category->update([
+            'name' => ucfirst(trim($validatedData['name'])),
+            'slug' => Str::slug($validatedData['name']),
+        ]);
 
         // Redirección con un mensaje de éxito
         return redirect()->route('admin.categories.index')->with('success', 'La categoría ha sido actualizada exitosamente.');

@@ -25,4 +25,10 @@ class Category extends Model
     {
         return $this->hasMany(Subcategory::class);
     }
+
+    // Accesor para URL amigable
+    public function getRouteKeyName()
+    {
+        return 'slug';
+    }
 }

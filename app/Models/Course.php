@@ -16,6 +16,11 @@ class Course extends Model
     protected $guarded = ['id','status'];
     protected $withCount = ['students','reviews'];
 
+    protected $casts = [
+        'average_rating' => 'float',
+        'students_count' => 'integer',
+    ];
+
     const BORRADOR = 1;
     const REVISION = 2;
     const PUBLICADO = 3;

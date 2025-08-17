@@ -9,7 +9,7 @@ class Subcategory extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['name', 'category_id'];
+    protected $fillable = ['name', 'slug', 'category_id'];
 
     public function category()
     {
@@ -19,5 +19,11 @@ class Subcategory extends Model
     public function courses()
     {
         return $this->hasMany(Course::class);
+    }
+
+    // Accesor para URL amigable
+    public function getRouteKeyName()
+    {
+        return 'slug';
     }
 }

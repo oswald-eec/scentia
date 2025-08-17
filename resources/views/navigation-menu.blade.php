@@ -129,6 +129,11 @@
                                     Perfil
                                 </x-dropdown-link>
 
+                                <x-dropdown-link href="{{ route('student.courses') }}">
+                                    Mis cursos
+                                </x-dropdown-link>
+
+
                                 @can('Leer cursos')
                                     <x-dropdown-link href="{{ route('instructor.courses.index') }}">
                                         Instructor
