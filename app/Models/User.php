@@ -68,7 +68,7 @@ class User extends Authenticatable
 
     //Relacion uno a muchos
     public function courses_dictated(){
-        return $this->hasOne(Course::class);
+        return $this->hasMany(Course::class);
     }
 
     public function courses_taught(){
@@ -114,4 +114,15 @@ class User extends Authenticatable
         return $this->hasMany(Payment::class);
     }
 
+    public function exams()
+    {
+        return $this->belongsToMany(Exam::class, 'exam_user')
+                    ->withPivot('score', 'passed', 'taken_at')
+                    ->withTimestamps();
+    }
+
+    public function certificates()
+    {
+        return $this->hasMany(Certificate::class);
+    }
 }

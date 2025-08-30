@@ -183,6 +183,21 @@
                         <span class="text-xs text-red-500">{{ $message }}</span>
                     @enderror
 
+                    <div class="mt-2">
+                        @if ($previewEmbedUrl)
+                            <div class="relative" style="padding-top: 56.25%;">
+                                <iframe
+                                    src="{{ $previewEmbedUrl }}"
+                                    class="absolute inset-0 w-full h-full"
+                                    frameborder="0"
+                                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                                    allowfullscreen
+                                ></iframe>
+                            </div>
+                        @endif
+                    </div>
+
+                    
                     <div>
                         <label class="w-32 text-gray-600">Duración (HH:MM:SS):</label>
                         <input 

@@ -1,72 +1,76 @@
 @props(['course'])
 
-<article class="bg-white shadow-lg rounded-lg overflow-hidden transition-transform transform hover:scale-105 hover:shadow-xl duration-300 ease-in-out">
-    <!-- Imagen del curso con lazy loading para mejorar rendimiento -->
-    <img class="h-36 w-full object-cover" 
-         src="{{ asset('storage/' . $course->image->url) }}" 
-         alt="Imagen del curso {{ $course->title }}" 
-         loading="lazy">
+<article 
+    class="bg-white shadow-md rounded-xl overflow-hidden transition-transform transform hover:scale-105 hover:shadow-2xl duration-300 ease-in-out flex flex-col">
 
-    <div class="px-6 py-4">
-        <!-- Título del curso, limitado a 40 caracteres -->
-        <h1 class="text-xl font-semibold text-gray-800 mb-2 leading-6" title="{{ $course->title }}">
-            {{ Str::limit($course->title, 30, '...') }}
+    <!-- Imagen del curso -->
+    <div class="relative">
+        <img class="h-40 w-full object-cover"
+            src="{{ asset('storage/' . $course->image->url) }}"
+            alt="Imagen del curso {{ $course->title }}"
+            loading="lazy">
+
+        <!-- Precio destacado -->
+        <div class="absolute top-2 right-2">
+            @if ($course->price->value == 0)
+                <span class="bg-red-600 text-white text-xs font-bold px-2 py-1 rounded shadow">
+                    <i class="fas fa-gift mr-1"></i> GRATIS
+                </span>
+            @else
+                <span class="bg-gray-800 text-white text-xs font-bold px-2 py-1 rounded shadow">
+                    {{ number_format($course->price->value, 2) }} BS
+                </span>
+            @endif
+        </div>
+    </div>
+
+    <!-- Contenido -->
+    <div class="p-5 flex-1 flex flex-col">
+        <!-- Título -->
+        <h1 class="text-lg font-bold text-gray-900 mb-2 leading-tight line-clamp-2">
+            {{ Str::limit($course->title, 40, '...') }}
         </h1>
-        
-        <!-- Nombre del profesor del curso -->
-        <p class="text-gray-500 text-xs mb-2">
-            <i class="fas fa-chalkboard-teacher mr-1"></i> 
-            Prof: {{ $course->teacher->name }}
+
+        <!-- Profesor -->
+        <p class="text-sm text-gray-500 mb-2 flex items-center">
+            <i class="fas fa-chalkboard-teacher mr-1 text-blue-500"></i>
+            {{ $course->teacher->name }}
         </p>
-        
-        <!-- Sección de estrellas de calificación -->
-        <div class="flex items-center">
-            <ul class="flex text-sm space-x-1">
+
+        <!-- Rating y estudiantes -->
+        <div class="flex items-center mb-3">
+            <ul class="flex text-yellow-400 text-sm">
                 @for ($i = 1; $i <= 5; $i++)
                     <li>
-                        <i class="fas fa-star text-{{ $course->rating >= $i ? 'yellow' : 'gray' }}-400"></i>
+                        <i class="fas fa-star {{ $course->rating >= $i ? '' : 'text-gray-300' }}"></i>
                     </li>
                 @endfor
             </ul>
-            <!-- Cantidad de estudiantes -->
-            <p class="text-sm text-gray-500 ml-auto flex items-center">
+            <p class="text-xs text-gray-500 ml-auto flex items-center">
                 <i class="fas fa-users mr-1"></i> {{ $course->students_count }}
             </p>
         </div>
 
-        <!-- Precio del curso -->
-        <p class="text-sm font-bold mt-3">
-            @if ($course->price->value == 0)
-                <span class="text-red-600"><i class="fas fa-gift mr-1"></i> GRATIS</span>
+        <!-- Botón dinámico -->
+        <div class="mt-auto">
+            @auth
+                @if (auth()->user()->courses_enrolled->contains($course->id))
+                    <a href="{{ route('course.show', $course) }}"
+                        class="block text-center w-full mt-2 bg-green-600 hover:bg-green-700 text-white font-semibold py-2 px-4 rounded-lg shadow-sm transition">
+                        <i class="fas fa-check-circle mr-1"></i> Estás Inscrito
+                    </a>
+                @else
+                    <a href="{{ route('course.show', $course) }}"
+                        class="block text-center w-full mt-2 bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 px-4 rounded-lg shadow-sm transition">
+                        <i class="fas fa-info-circle mr-1"></i> Más Información
+                    </a>
+                @endif
             @else
-                <span class="text-gray-800"><i class="fas fa-dollar-sign mr-1"></i> {{ number_format($course->price->value, 2) }} BS</span>
-            @endif
-        </p>
-
-        <!-- Botón de "Más Información" -->
-        {{-- <a href="{{ route('course.show', $course) }}" 
-           class="block text-center w-full mt-4 bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded transition-colors duration-300 ease-in-out focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50">
-            Más Información
-        </a> --}}
-
-        <!-- Botón dinámico según si el usuario está inscrito -->
-        @auth
-            @if (auth()->user()->courses_enrolled->contains($course->id))
-                <a href="{{ route('course.show', $course) }}" 
-                    class="block text-center w-full mt-4 bg-green-600 hover:bg-green-700 text-white font-bold py-2 px-4 rounded transition-colors duration-300 ease-in-out focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-opacity-50">
-                    Estas Inscrito
+                <a href="{{ route('course.show', $course) }}"
+                    class="block text-center w-full mt-2 bg-indigo-600 hover:bg-indigo-700 text-white font-semibold py-2 px-4 rounded-lg shadow-sm transition">
+                    <i class="fas fa-sign-in-alt mr-1"></i> Más Información
                 </a>
-            @else
-                <a href="{{ route('course.show', $course) }}" 
-                   class="block text-center w-full mt-4 bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded transition-colors duration-300 ease-in-out focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50">
-                    Más Información
-                </a>
-            @endif
-        @else
-            <a href="{{ route('course.show', $course)  }}" 
-               class="block text-center w-full mt-4 bg-green-500 hover:bg-green-600 text-white font-bold py-2 px-4 rounded transition-colors duration-300 ease-in-out focus:outline-none focus:ring-2 focus:ring-green-400 focus:ring-opacity-50">
-               Más Información
-            </a>
-        @endauth
+            @endauth
+        </div>
     </div>
 </article>

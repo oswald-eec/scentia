@@ -21,9 +21,7 @@
                         <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Matriculados</th>
                         <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Calificación</th>
                         <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Estado</th>
-                        <th class="px-6 py-3 text-right">
-                            <span class="sr-only">Editar</span>
-                        </th>
+                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Acciones</th>
                     </tr>
                 </thead>
                 <tbody class="bg-white divide-y divide-gray-200">
@@ -73,6 +71,7 @@
                             
                             {{-- Columna de Edición --}}
                             <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
+                                <a href="{{ route('course.show', $course) }}" class="text-green-600 hover:text-green-900 mr-4">Ver</a>
                                 <a href="{{ route('instructor.courses.edit',$course) }}" class="text-indigo-600 hover:text-indigo-900">Editar</a>
                             </td>   
                         </tr>

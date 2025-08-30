@@ -64,6 +64,12 @@
                             @else border-transparent 
                             @endif pl-2" href="{{ route('instructor.courses.students', $course) }}">Estudiantes</a>
                         </li>
+                        <li>
+                            <a class="leading-7 mb-1 border-l-4 @routeIs('instructor.courses.exams', $course) border-indigo-400 hover:text-indigo-600 
+                            @else border-transparent 
+                            @endif pl-2" href="{{ route('instructor.courses.exams', $course) }}">Examenes</a>
+                        </li>
+                        
                     </ul>
                     {{-- {{ $course }} --}}
                     <!-- Status del curso -->
@@ -81,7 +87,7 @@
                                 </button>
                             </form>
                             
-                            @if ($course->hotmart_url == null || $course->hotmart_id == null)
+                            {{-- @if ($course->hotmart_url == null || $course->hotmart_id == null)
                                 <div class="mt-4 p-4 rounded bg-red-300 text-red-800 flex items-center space-x-2">
                                     <svg class="w-5 h-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
                                         <path fill-rule="evenodd" d="M8.293 6.293a1 1 0 011.414 0L12 8.586l2.293-2.293a1 1 0 111.414 1.414L13.414 10l2.293 2.293a1 1 0 11-1.414 1.414L12 11.414l-2.293 2.293a1 1 0 11-1.414-1.414L10.586 10 8.293 7.707a1 1 0 010-1.414z" clip-rule="evenodd"/>
@@ -95,7 +101,7 @@
                                     </svg>
                                     <p class="text-xs font-semibold">¡Está completo el registro! Envia la solicitud.</p>
                                 </div>
-                            @endif
+                            @endif --}}
                             
                             
                             @break

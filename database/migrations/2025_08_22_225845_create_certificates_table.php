@@ -4,8 +4,6 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-use function PHPUnit\Framework\once;
-
 return new class extends Migration
 {
     /**
@@ -15,24 +13,18 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('comments', function (Blueprint $table) {
+        Schema::create('certificates', function (Blueprint $table) {
             $table->id();
-
-            $table->string('name');
-
             $table->unsignedBigInteger('user_id');
-
-            $table->unsignedBigInteger('parent_id')->nullable();
-            $table->foreign('parent_id')->references('id')->on('comments')->onDelete('cascade');
-
-            //$table->morphs('commentable');
-
-            $table->unsignedBigInteger('commentable_id');
-            $table->string('commentable_type');
+            $table->unsignedBigInteger('course_id');
+            $table->string('file_path'); 
+            $table->timestamp('issued_at')->nullable();
+            $table->timestamps();
 
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
+            $table->foreign('course_id')->references('id')->on('courses')->onDelete('cascade');
 
-            $table->timestamps();
+            $table->unique(['user_id','course_id']);
         });
     }
 
@@ -43,6 +35,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('comments');
+        Schema::dropIfExists('certificates');
     }
 };
