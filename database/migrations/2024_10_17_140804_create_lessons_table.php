@@ -18,7 +18,9 @@ return new class extends Migration
 
             $table->string('name');
             $table->string('url');
+            $table->unsignedInteger('duration_seconds')->nullable();
             $table->string('duration'); 
+            $table->string('video_id', 32)->nullable();
 
             $table->unsignedBigInteger('platform_id')->nullable();
             $table->unsignedBigInteger('section_id');
@@ -27,6 +29,10 @@ return new class extends Migration
             $table->foreign('section_id')->references('id')->on('sections')->onDelete('cascade');
 
             $table->timestamps();
+
+            // Índices útiles
+            $table->index(['platform_id', 'section_id']);
+            $table->index('video_id');
         });
     }
 

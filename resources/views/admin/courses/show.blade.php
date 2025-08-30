@@ -122,7 +122,7 @@
                         </div>
                     </div>
 
-                    <div class="mt-6 px-2 py-2">
+                    {{-- <div class="mt-6 px-2 py-2">
                         <!-- Sección de Hotmart -->
                         <h2 class="text-xl font-semibold text-gray-700">Hotmart</h2>
                         <div class="mt-2">
@@ -152,7 +152,7 @@
                             </button>
                         </form>
                         
-                    </div>
+                    </div> --}}
 
                     
 

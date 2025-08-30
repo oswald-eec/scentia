@@ -1,72 +1,111 @@
-<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
 
-    <h2 class="text-2xl font-bold text-gray-800 mb-4">Mis Cursos Inscritos</h2>
+    <!-- Título -->
+    <h2 class="text-3xl font-bold text-gray-800 mb-6 text-center">
+        <i class="fas fa-book-open text-blue-600 mr-2"></i> Mis Cursos Inscritos
+    </h2>
 
-    <!-- Filtro por estado -->
-    <div class="mb-6 max-w-xs">
+    <!-- Filtro -->
+    <div class="mb-8 max-w-xs mx-auto">
         <label for="estadoFiltro" class="block text-sm font-medium text-gray-700 mb-1">Filtrar por estado:</label>
-        <select wire:model="estadoFiltro" id="estadoFiltro" class="form-select w-full rounded-md border-gray-300 shadow-sm focus:ring focus:ring-blue-200">
+        <select wire:model="estadoFiltro" id="estadoFiltro"
+            class="form-select w-full rounded-md border-gray-300 shadow-sm focus:ring focus:ring-blue-200 focus:border-blue-400">
             <option value="todos">Todos</option>
             <option value="cursando">Cursando</option>
             <option value="pendiente_aprobacion">Pendiente</option>
+            <option value="no_pagado">No Pagado</option>
         </select>
     </div>
 
+    <!-- Cursos -->
     @if($courses->isEmpty())
-        <div class="bg-white p-6 rounded shadow text-center text-gray-500">
-            No tienes cursos en este estado.
+        <div class="bg-white p-8 rounded-lg shadow text-center text-gray-500">
+            <i class="fas fa-info-circle text-3xl text-gray-400 mb-2"></i>
+            <p>No tienes cursos en este estado.</p>
         </div>
     @else
-        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+        <!-- Grid responsive: 1 col (mobile), 2 col (tablet), 4 col (desktop) -->
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
             @foreach ($courses as $course)
-                <div class="bg-white border rounded shadow p-4 flex flex-col justify-between">
-                    <img 
+                <article
+                    class="bg-white shadow-md rounded-lg overflow-hidden hover:shadow-xl transition-transform transform hover:scale-105 duration-300 flex flex-col">
+
+                    <!-- Imagen -->
+                    <img class="h-40 w-full object-cover"
                         src="{{ asset('storage/' . $course->image->url) }}"
-                        alt="{{ $course->title }}"
-                        class="w-full h-40 object-cover rounded mb-4">
+                        alt="Imagen del curso {{ $course->title }}" loading="lazy">
 
-                    <h3 class="text-lg font-semibold text-gray-800 mb-1">{{ $course->title }}</h3>
-                    <p class="text-sm text-gray-500 mb-2">Instructor: {{ $course->teacher->name }}</p>
+                    <!-- Contenido -->
+                    <div class="p-5 flex-1 flex flex-col">
+                        <!-- Título -->
+                        <h3 class="text-lg font-semibold text-gray-800 mb-1 leading-tight">
+                            {{ Str::limit($course->title, 40, '...') }}
+                        </h3>
 
-                    <p class="text-sm font-medium mb-4">
-                        Estado:
-                        @switch($course->status)
-                            @case('cursando')
-                                <span class="text-green-600 font-semibold">Cursando</span>
-                                @break
+                        <!-- Instructor -->
+                        <p class="text-sm text-gray-500 mb-2 flex items-center">
+                            <i class="fas fa-chalkboard-teacher mr-1 text-blue-500"></i>
+                            {{ $course->teacher->name }}
+                        </p>
 
-                            @case('pendiente_aprobacion')
-                                <span class="text-yellow-600 font-semibold">Pendiente de Aprobación</span>
-                                @break
+                        <!-- Calificación y estudiantes -->
+                        <div class="flex items-center mb-2">
+                            <ul class="flex text-sm space-x-1">
+                                @for ($i = 1; $i <= 5; $i++)
+                                    <li>
+                                        <i class="fas fa-star {{ $course->rating >= $i ? 'text-yellow-400' : 'text-gray-300' }}"></i>
+                                    </li>
+                                @endfor
+                            </ul>
+                            <p class="text-xs text-gray-500 ml-auto flex items-center">
+                                <i class="fas fa-users mr-1"></i> {{ $course->students_count }}
+                            </p>
+                        </div>
 
-                            @default
-                                <span class="text-gray-500">No Pagado</span>
-                        @endswitch
-                    </p>
+                        <!-- Estado -->
+                        <p class="text-sm font-medium mb-4">
+                            Estado:
+                            @switch($course->status)
+                                @case('cursando')
+                                    <span class="inline-flex items-center px-2 py-1 rounded text-xs font-semibold bg-green-100 text-green-700">
+                                        <i class="fas fa-play mr-1"></i> Cursando
+                                    </span>
+                                    @break
 
-                    @if($course->status === 'cursando')
-                        <a href="{{ route('course.show', $course) }}"
-                        class="mt-auto inline-block text-center bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 px-4 rounded transition">
-                            Ver Curso
-                        </a>
-                    @elseif($course->status === 'pendiente_aprobacion')
-                        <a href="{{ route('course.show', $course) }}"
-                        class="mt-auto inline-block text-center bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 px-4 rounded transition">
-                            Ver Curso
-                        </a>
-                    @elseif($course->status === 'no_pagado')
-                        <a href="{{ route('payment.options', $course) }}"
-                        class="mt-auto inline-block text-center bg-indigo-600 hover:bg-indigo-700 text-white font-semibold py-2 px-4 rounded transition">
-                            Pagar Curso
-                        </a>
-                    @endif
+                                @case('pendiente_aprobacion')
+                                    <span class="inline-flex items-center px-2 py-1 rounded text-xs font-semibold bg-yellow-100 text-yellow-700">
+                                        <i class="fas fa-clock mr-1"></i> Pendiente
+                                    </span>
+                                    @break
 
-                </div>
+                                @default
+                                    <span class="inline-flex items-center px-2 py-1 rounded text-xs font-semibold bg-gray-100 text-gray-500">
+                                        <i class="fas fa-ban mr-1"></i> No Pagado
+                                    </span>
+                            @endswitch
+                        </p>
+
+                        <!-- Botón dinámico -->
+                        <div class="mt-auto">
+                            @if($course->status === 'cursando' || $course->status === 'pendiente_aprobacion')
+                                <a href="{{ route('course.show', $course) }}"
+                                    class="block text-center w-full mt-2 bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-lg transition">
+                                    Ver Curso
+                                </a>
+                            @elseif($course->status === 'no_pagado')
+                                <a href="{{ route('payment.options', $course) }}"
+                                    class="block text-center w-full mt-2 bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-2 px-4 rounded-lg transition">
+                                    Pagar Curso
+                                </a>
+                            @endif
+                        </div>
+                    </div>
+                </article>
             @endforeach
         </div>
     @endif
 
-    <!-- Footer -->
-    <x-footer />
-
 </div>
+
+<!-- Footer -->
+    <x-footer />

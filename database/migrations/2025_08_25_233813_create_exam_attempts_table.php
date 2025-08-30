@@ -4,8 +4,6 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-use function PHPUnit\Framework\once;
-
 return new class extends Migration
 {
     /**
@@ -15,24 +13,18 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('comments', function (Blueprint $table) {
+        Schema::create('exam_attempts', function (Blueprint $table) {
             $table->id();
-
-            $table->string('name');
-
+            $table->unsignedBigInteger('exam_id');
             $table->unsignedBigInteger('user_id');
-
-            $table->unsignedBigInteger('parent_id')->nullable();
-            $table->foreign('parent_id')->references('id')->on('comments')->onDelete('cascade');
-
-            //$table->morphs('commentable');
-
-            $table->unsignedBigInteger('commentable_id');
-            $table->string('commentable_type');
-
-            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
-
+            $table->integer('attempt_number')->default(1);
+            $table->decimal('score', 5, 2)->nullable();
+            $table->boolean('passed')->default(false);
+            $table->timestamp('taken_at')->nullable();
             $table->timestamps();
+
+            $table->foreign('exam_id')->references('id')->on('exams')->onDelete('cascade');
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
         });
     }
 
@@ -43,6 +35,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('comments');
+        Schema::dropIfExists('exam_attempts');
     }
 };

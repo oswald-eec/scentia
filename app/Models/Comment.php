@@ -20,6 +20,17 @@ class Comment extends Model
         return $this->belongsTo(User::class);
     }
 
+    // Relación de respuestas (self-referencing)
+    public function replies()
+    {
+        return $this->hasMany(Comment::class, 'parent_id')->with('user');
+    }
+
+    public function parent()
+    {
+        return $this->belongsTo(Comment::class, 'parent_id');
+    }
+
     public function comments(){
         return $this->morphMany(Comment::class,'commentable');
     }
