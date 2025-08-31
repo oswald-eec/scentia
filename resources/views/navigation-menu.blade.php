@@ -216,6 +216,14 @@
                         {{ __('Profile') }}
                     </x-responsive-nav-link>
 
+                    <x-responsive-nav-link href="{{ route('student.courses') }}" :active="request()->routeIs('student.courses')">
+                        {{ __('Mis Cursos') }}
+                    </x-responsive-nav-link>
+
+                    {{-- <x-dropdown-link href="{{ route('student.courses') }}">
+                                    Mis cursos
+                                </x-dropdown-link> --}}
+
                     @can('Leer cursos')
                         <x-responsive-nav-link href="{{ route('instructor.courses.index') }}" :active="request()->routeIs('instructor.courses.index')">
                             Instructor
