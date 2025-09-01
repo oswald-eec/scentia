@@ -18,7 +18,7 @@
 
         <!-- Nombre del profesor del curso -->
         <p class="text-gray-500 text-xs mb-2">
-            <i class="fas fa-chalkboard-teacher mr-1"></i>
+            <i class="fas fa-chalkboard-teacher mr-1 text-blue-500"></i>
             Prof: {{ $course->teacher->name }}
         </p>
 
@@ -52,14 +52,6 @@
                 </span>
             @endif
         </p>
-
-        <!-- Botón de "Más Información" -->
-        {{-- 
-        <a href="{{ route('course.show', $course) }}"
-            class="block text-center w-full mt-4 bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded transition-colors duration-300 ease-in-out focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50">
-            Más Información
-        </a> 
-        --}}
 
         <!-- Botón dinámico según si el usuario está inscrito -->
         @auth
